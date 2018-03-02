@@ -1,0 +1,75 @@
+@CHARSET "UTF-8";
+.sjj{
+	display: none;
+}
+.s:hover .sjj{
+	margin-left:10px;
+	txt-align:center;
+	color:white;
+	display:block;
+}
+#index-a a{	
+	text-decoration:none;
+	cursor: pointer;
+	color:#5a5a5a;
+}
+
+.line{
+	height:1px;
+	border-bottom:solid 1px #c0c0c0;
+}
+.s .div_s{
+	position: absolute;
+	width: 80%; 
+	text-align: center;
+	top:15%;
+}
+.login-ul{
+	position:absolute;
+	width:300px;
+	height:220px;
+	margin-top:55%;
+}
+.fenlei-a{
+	margin-left:40px;
+	margin-top:30px;
+}
+.course-div{
+	width:100%;
+	background: #c0c0c0;
+}
+.news-img{
+	max-width:250px;
+}
+.aboutus-div{
+	margin-top:20px;
+	border: 1px solid #adadad;
+}
+#aboutus-left-div {
+	margin-top:20px;
+	border: 1px solid #ffcccc; 
+}
+.aboutus-a-div{
+	width:100%;
+	height:40px;
+	text-align:center ;
+	border: 1px solid #ccccff; 
+	background: #ffcccc;
+}
+.aboutus-a-div a{
+	line-height:40px;
+	display:block;
+}
+.aboutus-a-div:HOVER {
+	background: #99ccff;
+}
+.active2{
+	background: white;
+}
+.change:HOVER{
+	background: white;
+}
+
+.adminlogin{
+	background: url(../image/banner.jpg) repeat;
+}
