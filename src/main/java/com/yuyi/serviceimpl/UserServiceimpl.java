@@ -29,19 +29,31 @@ public class UserServiceimpl implements UserService {
 	private UserDao user;
 	
 	public User selectBylogin(String name, String password) {
-		// TODO Auto-generated method stub
 		return user.selectBylogin(name, password);
 	}
 
 	public List<Batch> SelectByBatch() {
-		// TODO Auto-generated method stub
 		return user.SelectByBatch();
 	}
 
 	//注册账户
 	public int insertid(String username, String password, String phone, String name) {
-		// TODO Auto-generated method stub
 		return user.insertid(username, password, phone, name);
+	}
+		//修改密码>>查询用户信息是否存在在进行修改
+	public String selectupdate(String username, String password, String phone) {
+		return user.selectUpdae(username, password, phone);
+	}
+	//修改密码>>查询出来之后进行修改
+	public int xiugaiUser(String username, String password) {
+		return user.xiugaiUser(username,password);
+	}
+	
+	
+	//查询用户是否存在,再进行注册
+	@Override
+	public String selectUser(String username, String phone) {
+		return user.selectUser(username,phone);
 	}
 
 

@@ -71,8 +71,9 @@ function addonefirst() {
 		return false;
 	}
 	
-	 $.post("addtwomenu", {name : name,address : address, id : id}
-	, function(data) {
+	 $.post("addtwomenu", 
+	 {name : name,address : address, id : id},
+	  function(data) {
 		if (data.ok == 1) {
 			alert("新增失败");
 		} else {

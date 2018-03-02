@@ -14,5 +14,6 @@ import com.yuyi.model.loginAdmin;
  */
 public interface AdminLoginService {
 	List<loginAdmin> SelectLoginAdmin();
+	
 	int InsertLoginAdmin(String ip,String name,String time);
 }

@@ -28,22 +28,22 @@
 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;输入密码：<input type="password" class="input3" id="password" />
 				</div>
 				<div class="bbD">
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;再次确认密码：<input type="password" class="input3" id="password2" />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;确认密码：<input type="password" class="input3" id="password2" />
 				</div>
 				
 				<div class="bbD">
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;手机号：<input type="text" class="input3" id="phone" />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;手机号：&nbsp;&nbsp;&nbsp;<input type="text" class="input3" id="phone" />
 				</div>
 				
 				<div class="bbD">
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;姓名：<input type="name" class="input3" 
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;姓名：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="name" class="input3" 
 						id="name" />
 				</div>
 				
 				<div class="bbD">
 					<p class="bbDP">
 						<button class="btn_ok btn_yes" onclick="checkpwd1()">提交</button>
-						<a class="btn_ok btn_no" href="#">取消</a>
+						<a class="btn_ok btn_no"  id = "quxiao" href="#">取消</a>
 					</p>
 				</div>
 			</div>
@@ -53,12 +53,18 @@
 	</div>
 </body>
 <script type="text/javascript">
+		$(document).ready(function(){
+		  $("#quxiao").click(function(){
+		   		window.location.href=window.location.href;   // 清空输入框
+					window.location.reload; 							
+		  });
+		});
 		function checkpwd1(){
-			var username = $("#username").val();
-			var password = $("#password").val();
-			var password2 = $("#password2").val();
-			var phone = $("#phone").val();
-			var name = $("#name").val();
+			var username = $("#username").val();   //获取账号
+			var password = $("#password").val();  //获取密码
+			var password2 = $("#password2").val(); //获取重复密码
+			var phone = $("#phone").val(); //获取手机号
+			var name = $("#name").val(); //获取姓名
 			if(name.length==0 || name==null){
 				alert("账号不能为空");
 				return false;
@@ -71,6 +77,10 @@
 				alert("两次密码输入不一致");
 				return false;
 			}
+          if(!(/^1(3|4|5|7|8)\d{9}$/.test(phone))&&phone.length!=11){     //正则表达式判断手机号格式和长度
+         	 alert("请输入正确的11位手机号")
+              return false;  
+          } 
 			$.post("AddUsers", {
 				username : username,
 				password : password,
@@ -80,8 +90,16 @@
 			function(data) {
 				if (data == 1) {
 					alert("添加成功");
-				} else {
+					window.location.href=window.location.href;   //添加完成之后进行局部刷新 清空输入框
+					window.location.reload; 								//添加完成之后进行局部刷新 清空输入框
+				} else if(data == 0) {
 					alert("添加失败");
+					window.location.href=window.location.href;   //添加完成之后进行局部刷新 清空输入框
+					window.location.reload; 								//添加完成之后进行局部刷新 清空输入框
+				}else if(data == 2){
+					alert("用户信息已存在请重新填写账号或密码")
+				}else{
+					alert("未知错误 请联系网络管理员!!!")
 				}
 			});
 		}

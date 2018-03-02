@@ -17,9 +17,12 @@ import com.yuyi.model.loginAdmin;
  * 
  */
 public interface AdminLogin {
+
+	
+	//查询出来
 	@Select("select * from admin_login_table order by id desc")
 	List<loginAdmin> SelectLoginAdmin();
-	
-	@Insert("insert into admin_login_table(ip,name,time) values(#{ip},#{name},#{time})")
+	//插入用户登陆信息  IP 登陆时间  用户名
+	@Insert("insert into admin_login_table (ip,name,time) values (#{ip},#{name},#{time})")
 	int InsertLoginAdmin(@Param("ip")String ip,@Param("name")String name,@Param("time")String time);
 }

@@ -11,7 +11,7 @@ import java.util.Date;
  * 
  */
 public class loginAdmin {
-	private int id;	//id
+	private int id;	//id  自增 
 	private String ip;  //记录用户ip
 	private String time;  //记录用户登录时间
 	private String name;  //登录用户的名字

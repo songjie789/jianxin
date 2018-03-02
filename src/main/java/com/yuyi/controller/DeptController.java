@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.ibatis.annotations.Param;
+import org.apache.jasper.tagplugins.jstl.core.Out;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -25,9 +25,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.eyunhe.rsatools.RSAUtils;
 import com.yuyi.model.Batch;
 import com.yuyi.model.User;
-import com.yuyi.model.loginAdmin;
 import com.yuyi.service.AdminLoginService;
 import com.yuyi.service.UserService;
+import com.yuyi.util.GetTime;
+import com.yuyi.util.MD5;
+import com.yuyi.util.getIP;
+
+import javassist.expr.NewArray;
+
 
 @Controller
 public class DeptController {
@@ -39,25 +44,9 @@ public class DeptController {
 	@Qualifier("admin_logina")
 	private AdminLoginService als;
 	
-	//登录
+	//跳转登陆页面
 	@RequestMapping("login")
-	public String findAll(Model m, HttpSession session,User u) throws Exception{	
-		RSAUtils rsa = new RSAUtils();
-		// 生成公钥和密钥
-		Map<String, Object> keyMap = rsa.createKey();
-		RSAPublicKey publicKey = (RSAPublicKey) keyMap.get("publicKey");
-		RSAPrivateKey privateKey = (RSAPrivateKey) keyMap.get("privateKey");
-		// js通过模和公钥指数获取公钥对字符串进行加密，注意必须转为16进制
-		// 模
-		String Modulus = publicKey.getModulus().toString();
-		// 公钥指数
-		String public_exponent = publicKey.getPublicExponent().toString(16);
-		// 私钥指数
-		String private_exponent = privateKey.getPrivateExponent().toString();
-		RSAPrivateKey prkey = RSAUtils.getPrivateKey(Modulus, private_exponent);
-		m.addAttribute("Modulus", publicKey.getModulus().toString(16));
-		m.addAttribute("public_exponent", public_exponent);
-		session.setAttribute("prkey", prkey);
+	public String findAll() throws Exception{	
 		return "/login";
 	}
 	
@@ -69,63 +58,54 @@ public class DeptController {
 		
 	}
 	
-	@RequestMapping("index")
-	public String login(User u,Model aa,HttpSession session) throws Exception {
+	//获取MD5加密工具类
+	MD5 md5 = new MD5();
 
-		User a=user.selectBylogin(u.getName(), u.getPassword());
-		session.setAttribute("admin", u.getName());
-		InetAddress ia=null;
-		ia=ia.getLocalHost();
-		String ip=ia.getHostAddress();
-		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss ");
-		java.util.Date date=new java.util.Date();
-		String time=sdf.format(date);
-		if(a==null) {
-			aa.addAttribute("failure", "账号或密码不正确");
-			return "/login";
-		}else {
-			als.InsertLoginAdmin(ip, u.getName(), time);
-			return "redirect:indexa";
-		}
-	}
-	//主页面
+	//登陆之后转向主页面 向数据库添加 登陆的IP登陆的用户名登陆的时间
 	@RequestMapping("indexa")
-	public String logina(HttpSession session) {
-		String admin = (String) session.getAttribute("admin");
-		
-		String password = (String) session.getAttribute("password");
-		System.out.println("登录账号:"+admin);
-			return "/index";
+	public String logina(@RequestParam("username")String username,@RequestParam("password")String password,
+			HttpSession session) throws Exception {
+		String md5password = md5.MD5(password);
+		User denglu=user.selectBylogin(username, md5password);
+			session.setAttribute("admin", username);   //存放登陆标记
+			getIP getIP = new getIP();
+			GetTime getTime = new GetTime();
+			String time = getTime.time();
+			String ip = getIP.IP();
+			String admin = (String) session.getAttribute("admin");
+			int a = als.InsertLoginAdmin(ip, admin, time);
+		return "/index";
 	}
 	
-	//注册加密
+	//修改密码
 	@RequestMapping("registrationAdmin")
 	public void registrationAdmin(@RequestParam("username")String username,@RequestParam("password")String password,
-			@RequestParam("phone")String phone,Model aa,HttpSession session,@RequestParam("name")String name,
+			@RequestParam("phone")String phone,Model aa,HttpSession session,
 			HttpServletResponse response) throws Exception {	
-			RSAUtils rsa = new RSAUtils();
-			RSAPrivateKey prkey = (RSAPrivateKey) session.getAttribute("prkey");
-			String pwd = rsa.decrypttoStr(prkey, password);
-			String pd = new StringBuffer(pwd).reverse().toString();
-			// MD5加密
-			String md5pwd = MD5tool.EncoderByMd5(pd);
-			System.out.println(md5pwd);
-			int ok = -1;
-			int number = -1;
-			number = user.insertid(username, md5pwd, phone, name);
-			if(number>0){
-				ok=1;
-			}else{
-				ok=0;
-			}
+			int ok = 0;
+			int number = 0;
 			PrintWriter out = response.getWriter();
+			//修改密码>>查询用户是否存在再进行修改密码
+			String md5password = md5.MD5(password);
+			String selectUpdate = user.selectupdate(username,md5password,phone);
+			//查询出来的用户信息如果不为空就可以修改用户
+			if(selectUpdate!=null){
+				number = user.xiugaiUser(username,md5password);
+				if(number>0){
+					ok=1;
+				}else{
+					ok=0;
+				}
+			}else{
+				ok=2;
+			}
 			out.print(ok);
 	}
 	
 	
 	@RequestMapping("/del")  
 	public void batchDeletes(HttpServletRequest request, HttpServletResponse response) {  
-	    String items = request.getParameter("delitems");// System.out.println(items);  
+	    String items = request.getParameter("delitems");
 	    String[] strs = items.split(",");  
 	  
 	    for (int i = 0; i < strs.length; i++) {  
@@ -138,20 +118,29 @@ public class DeptController {
 	}
 	
 	
-	//注册用户
+	
+	//先查询用户是否存在,不存在再注册用户
 	@RequestMapping("AddUsers")
 	public void AddUsers(@RequestParam("username")String username,@RequestParam("password")String password,
 			@RequestParam("phone")String phone,@RequestParam("name")String name,
 			HttpSession session,HttpServletResponse response) throws IOException {
-		int ok = -1;
-		int number = -1;
-		number = user.insertid(username, password, phone, name);
-		if(number>0){
-			ok=1;
-		}else{
-			ok=0;
-		}
+		String md5password = md5.MD5(password);
+		int ok = 0;
+		int number=0;
 		PrintWriter out = response.getWriter();
+		String selectuser = user.selectUser(username,phone);
+		if(selectuser==null){
+			number = user.insertid(username, md5password, phone, name);
+			if(number>0){
+				ok=1;   //添加用户成功
+			}else{
+				ok=0;	 //添加用户失败
+			}
+		}else{
+			ok=2;	//用户已存在
+		}
 		out.print(ok);
 	}
+	
+	
 }

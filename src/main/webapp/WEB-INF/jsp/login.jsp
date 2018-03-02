@@ -47,11 +47,11 @@ button{
    <ul>
     <li> 
      <label>账号：</label>
-     <input type="text" name="username" class="textBox" placeholder="管理员账号"/>
+     <input type="text" name="username"  id = "username"class="textBox" placeholder="管理员账号"/>
     </li>
     <li>
      <label>密码：</label>
-     <input type="password" name="password" class="textBox" placeholder="登陆密码"/>
+     <input type="password" name="password" id = "password"class="textBox" placeholder="登陆密码"/>
     </li>
     <li>
      <button>登录</button>
@@ -60,4 +60,7 @@ button{
   </section>
   </form>
 </body>
+<script type="text/javascript">
+	
+</script>
 </html>

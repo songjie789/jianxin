@@ -1,6 +1,6 @@
 package com.ecanal_mail.tools;
 
-import it.sauronsoftware.base64.Base64;
+//import it.sauronsoftware.base64.Base64;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
@@ -15,37 +15,37 @@ import org.bouncycastle.jce.provider.BouncyCastleProvider;
 
 
 /**
- * java实现AES256加密解密
- * 依赖说明：
- * bcprov-jdk15-133.jar：PKCS7Padding
- * javabase64-1.3.1.jar：base64
- * local_policy.jar 和 US_export_policy.jar需添加到%JAVE_HOME%\jre\lib\security中（lib中版本适合jdk1.7）
+ * java瀹炵幇AES256鍔犲瘑瑙ｅ瘑
+ * 渚濊禆璇存槑锛�
+ * bcprov-jdk15-133.jar锛歅KCS7Padding
+ * javabase64-1.3.1.jar锛歜ase64
+ * local_policy.jar 鍜� US_export_policy.jar闇�娣诲姞鍒�%JAVE_HOME%\jre\lib\security涓紙lib涓増鏈�傚悎jdk1.7锛�
  */
 
 public class AES256Tool {
 	public static byte[] encrypt(String content, String password) {
 		try {
-			//"AES"：请求的密钥算法的标准名称
+			//"AES"锛氳姹傜殑瀵嗛挜绠楁硶鐨勬爣鍑嗗悕绉�
 			KeyGenerator kgen = KeyGenerator.getInstance("AES");
-			//256：密钥生成参数；securerandom：密钥生成器的随机源
+			//256锛氬瘑閽ョ敓鎴愬弬鏁帮紱securerandom锛氬瘑閽ョ敓鎴愬櫒鐨勯殢鏈烘簮
 			SecureRandom securerandom = new SecureRandom(tohash256Deal(password));
 			kgen.init(256, securerandom);
-			//生成秘密（对称）密钥
+			//鐢熸垚绉樺瘑锛堝绉帮級瀵嗛挜
 			SecretKey secretKey = kgen.generateKey();
-			//返回基本编码格式的密钥
+			//杩斿洖鍩烘湰缂栫爜鏍煎紡鐨勫瘑閽�
 			byte[] enCodeFormat = secretKey.getEncoded();
-			//根据给定的字节数组构造一个密钥。enCodeFormat：密钥内容；"AES"：与给定的密钥内容相关联的密钥算法的名称
+			//鏍规嵁缁欏畾鐨勫瓧鑺傛暟缁勬瀯閫犱竴涓瘑閽ャ�俥nCodeFormat锛氬瘑閽ュ唴瀹癸紱"AES"锛氫笌缁欏畾鐨勫瘑閽ュ唴瀹圭浉鍏宠仈鐨勫瘑閽ョ畻娉曠殑鍚嶇О
 			SecretKeySpec key = new SecretKeySpec(enCodeFormat, "AES");
-			//将提供程序添加到下一个可用位置
+			//灏嗘彁渚涚▼搴忔坊鍔犲埌涓嬩竴涓彲鐢ㄤ綅缃�
 			Security.addProvider(new BouncyCastleProvider());
-			//创建一个实现指定转换的 Cipher对象，该转换由指定的提供程序提供。
-			//"AES/ECB/PKCS7Padding"：转换的名称；"BC"：提供程序的名称
+			//鍒涘缓涓�涓疄鐜版寚瀹氳浆鎹㈢殑 Cipher瀵硅薄锛岃杞崲鐢辨寚瀹氱殑鎻愪緵绋嬪簭鎻愪緵銆�
+			//"AES/ECB/PKCS7Padding"锛氳浆鎹㈢殑鍚嶇О锛�"BC"锛氭彁渚涚▼搴忕殑鍚嶇О
 			Cipher cipher = Cipher.getInstance("AES/ECB/PKCS7Padding", "BC");
 
 			cipher.init(Cipher.ENCRYPT_MODE, key);
 			byte[] byteContent = content.getBytes("utf-8");
 			byte[] cryptograph = cipher.doFinal(byteContent);
-			return Base64.encode(cryptograph);
+		//	return Base64.encode(cryptograph);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -65,10 +65,10 @@ public class AES256Tool {
 			Cipher cipher = Cipher.getInstance("AES/ECB/PKCS7Padding", "BC");
 
 			cipher.init(Cipher.DECRYPT_MODE, key);
-			byte[] content = cipher.doFinal(Base64.decode(cryptograph));
-			msg = new String(content);
+		//	byte[] content = cipher.doFinal(Base64.decode(cryptograph));
+	//		msg = new String(content);
 		} catch (Exception e) {
-			msg="解密错误";
+			msg="瑙ｅ瘑閿欒";
 		}
 		return msg;
 	}
@@ -112,17 +112,17 @@ public class AES256Tool {
 
 		String content = "0f607264fc6318a92b9e13c65db7cd3c";
 		String password = "123456";
-		System.out.println("明文：" + content);
-		System.out.println("key：" + password);
+		System.out.println("鏄庢枃锛�" + content);
+		System.out.println("key锛�" + password);
 		
 		byte[] encryptResult = AES256Tool.encrypt(content, password);
-		System.out.println("密文：" + AES256Tool.parseByte2HexStr(encryptResult));
+		System.out.println("瀵嗘枃锛�" + AES256Tool.parseByte2HexStr(encryptResult));
 		
 		String decryptResult = AES256Tool.decrypt(encryptResult, "123");
-		System.out.println("解密：" + decryptResult);
-		System.out.println("base64加密：");
-		System.out.println("Base64:"+Base64.encode("913a50990dd4127ad1cd69196544ba5d81c9417a9d67e216e296fa45b9eb7ffa668f73e0ec3376dfa2b6c2a7ea40f851b6967dac4f3163cf7679990c148399b3"));
-		System.out.println("base64解密：");
-		System.out.println("Base64:"+Base64.decode("OTEzYTUwOTkwZGQ0MTI3YWQxY2Q2OTE5NjU0NGJhNWQ4MWM5NDE3YTlkNjdlMjE2ZTI5NmZhNDViOWViN2ZmYTY2OGY3M2UwZWMzMzc2ZGZhMmI2YzJhN2VhNDBmODUxYjY5NjdkYWM0ZjMxNjNjZjc2Nzk5OTBjMTQ4Mzk5YjM"));
+		System.out.println("瑙ｅ瘑锛�" + decryptResult);
+		System.out.println("base64鍔犲瘑锛�");
+	//	System.out.println("Base64:"+Base64.encode("913a50990dd4127ad1cd69196544ba5d81c9417a9d67e216e296fa45b9eb7ffa668f73e0ec3376dfa2b6c2a7ea40f851b6967dac4f3163cf7679990c148399b3"));
+		System.out.println("base64瑙ｅ瘑锛�");
+		//System.out.println("Base64:"+Base64.decode("OTEzYTUwOTkwZGQ0MTI3YWQxY2Q2OTE5NjU0NGJhNWQ4MWM5NDE3YTlkNjdlMjE2ZTI5NmZhNDViOWViN2ZmYTY2OGY3M2UwZWMzMzc2ZGZhMmI2YzJhN2VhNDBmODUxYjY5NjdkYWM0ZjMxNjNjZjc2Nzk5OTBjMTQ4Mzk5YjM"));
 	}
 }

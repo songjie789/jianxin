@@ -38,7 +38,7 @@ public class MenuController {
 				HttpServletResponse response) throws IOException {
 		int ok = -1;
 		int number = -1;
-		number = first.insertFirst(name, "img/coin09.png");
+		number = first.insertFirst(name, "img/coin10.png");
 		if(number>0){
 			ok=1;
 		}else{

@@ -34,6 +34,7 @@ public class AdminLoginServiceimpl implements AdminLoginService {
 
 	public int InsertLoginAdmin(String ip, String name, String time) {
 		// TODO Auto-generated method stub
+		System.out.println("service"+ip+name+time);
 		return al.InsertLoginAdmin(ip, name, time);
 	}
 
