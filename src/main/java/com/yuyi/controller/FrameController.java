@@ -9,10 +9,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.yuyi.model.Car;
 import com.yuyi.model.FirstMenu;
 import com.yuyi.model.SecondMenu;
 import com.yuyi.model.loginAdmin;
 import com.yuyi.service.AdminLoginService;
+import com.yuyi.service.CarService;
 import com.yuyi.service.FirstMenuService;
 import com.yuyi.service.SecondService;
 import com.yuyi.util.GetTime;
@@ -41,6 +43,9 @@ public class FrameController {
 	@Qualifier("admin_logina")
 	private AdminLoginService als;
 	
+	@Autowired
+	@Qualifier("car")
+	private CarService car;
 	//主体
 	@RequestMapping("main")
 	public String main(Model m ) {
@@ -104,6 +109,17 @@ public class FrameController {
 		
 		return "/changepwda";
 		
+	}
+	
+	//跳转到车辆信息页面
+	@RequestMapping("carcontent")
+	public String catContent(Model m){
+		//查询车辆信息,进行分页展示
+			List<Car>selectCar = car.selectCar();
+			System.out.println("查询车辆信息进行分页展示加载完毕");
+			System.out.println(selectCar.toString());
+			m.addAttribute("selectCar",selectCar);
+			return "/carcontent";
 	}
 	
 }

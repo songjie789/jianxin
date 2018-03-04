@@ -34,7 +34,4 @@ public interface UserService {
 	
 	//修改密码>>查询出来之后进行修改
 	int xiugaiUser(String username, String password);
-	
-
-	
 }

@@ -141,6 +141,4 @@ public class DeptController {
 		}
 		out.print(ok);
 	}
-	
-	
 }

@@ -56,5 +56,4 @@ public class UserServiceimpl implements UserService {
 		return user.selectUser(username,phone);
 	}
 
-
 }

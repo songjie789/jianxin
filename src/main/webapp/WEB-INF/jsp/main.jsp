@@ -22,7 +22,7 @@
 </head>
 <body style="padding-bottom:3px;">
 <div style="width:1100px;margin:1px;top:10px;" id="MainForm">
-
+	
 	<table width="100%" height="100%" id="testtable2" cellpadding="0" cellspacing="0">
 		<thead><tr>
 			<th>编号</th>
@@ -33,19 +33,18 @@
 		</thead>
 		<tbody>
 		<c:set var="number" value="1"></c:set>
-		<c:forEach items="${requestScope.AdminLogin }" var="second">
+		<c:forEach items="${requestScope.AdminLogin}" var="second">
 			<tr>
 			<td>${number}</td>
 			<td>${second.name }</td>
 			<td>${second.time }</td>
 			<td>${second.ip }</td>
 			</tr>
-		<c:set var="number" value="${number+1 }"></c:set>
+		<c:set var="number" value="${number+1}"></c:set>
 		</c:forEach>
 		</tbody>
 	</table>
 </div>
-
 <div style="text-align:center;">
 </div>
 </body>
