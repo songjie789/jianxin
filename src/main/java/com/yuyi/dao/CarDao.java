@@ -2,6 +2,7 @@ package com.yuyi.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -17,4 +18,14 @@ public interface CarDao {
 	//查询车辆信息进行分页展示
 	@Select("select * from car_table order by car_id desc")
 	List<Car> selectCar();
+	
+	
+	//删除车辆信息
+	@Delete("delete from car_table where car_id=#{car_id}")
+	int carDelect(String car_id);
+	
+	
+	//查询修改车辆信息
+	@Select("select * from car_table where car_id = #{car_id}")
+	Car select_car(String car_id);
 }

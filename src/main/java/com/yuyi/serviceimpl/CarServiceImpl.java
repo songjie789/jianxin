@@ -30,4 +30,18 @@ public class CarServiceImpl implements CarService{
 		return car.selectCar();
 		
 	}
+	
+	
+	//删除车辆信息
+	@Override
+	public int CarDelect(String car_id) {
+		return car.carDelect(car_id);
+	}
+	
+	
+	//先查询修改的车辆信息,把车辆信息带到修改页面
+	@Override
+	public Car selectCar(String car_id) {
+		return car.select_car(car_id);
+	}
 }

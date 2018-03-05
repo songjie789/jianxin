@@ -60,7 +60,9 @@ public class FrameController {
 	//上层
 	@RequestMapping("head")
 	public String head(HttpSession session,Model m) {
+		
 		String admin = (String)session.getAttribute("admin");
+		System.out.println(admin);
 		m.addAttribute("admin", admin);
 		return "/head";
 		
@@ -115,7 +117,7 @@ public class FrameController {
 	@RequestMapping("carcontent")
 	public String catContent(Model m){
 		//查询车辆信息,进行分页展示
-			List<Car>selectCar = car.selectCar();
+			List<Car> selectCar = car.selectCar();
 			System.out.println("查询车辆信息进行分页展示加载完毕");
 			System.out.println(selectCar.toString());
 			m.addAttribute("selectCar",selectCar);

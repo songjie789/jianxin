@@ -51,6 +51,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   			<button class="button white" id="search" >搜索</button>
   			<button class="button white" id = "add">添加信息</button>
   		</div>
+  		
+  		
+  		
+  		
   		<!-- 分页 -->
   		<div id= "fenye"style="width:1100px;margin:1px;top:10px;" id="MainForm">
 <br/>
@@ -66,8 +70,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			</tr>
 		</thead>
 		<tbody>
-		<c:forEach items="${selectCar}" var="second">
-			<tr>
+		<c:forEach items="${requestScope.selectCar}" var="second">
+			<tr id = "tr">
 			<td>${second.car_id }</td>
 			<td>${second.car_name }</td>
 			<td>${second.car_length }</td>
@@ -75,6 +79,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<td>${second.car_number}</td>
 			<td>${second.car_driver}</td>
 			<td>${second.car_unit}</td>
+			<td><button class="button white" onclick = "update(this.id)" id = ${second.car_id }>修改</button></td>
+			<td><button class="button white"  onclick= "deletes(this.id)" id = ${second.car_id }>删除</button></td>
 			</tr>
 		</c:forEach>
 		</tbody>
@@ -139,13 +145,120 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   			<button class="button white"  id="quxiao">取消</button>
   			</center>
   		</div>
+  		
+  		
+  		
+  		
+  		
+  		<!-- 修改车辆信息页面  默认隐藏 -->
+  		<div class="addcar" id="xiugai">
+  			<center>
+  			<table cellspacing="20px">
+  				<tr>
+  					<td>车辆名称:</td>
+  					<td><input id = "update_name" style="height: 30px;width: 200px"disabled="true"　readOnly="true" /></td>
+  				</tr>
+  				
+  				<tr>
+  					<td>车辆长度:</td>
+  					<td><input   id="update_length" style="height: 30px;width: 200px"disabled="true"　readOnly="true"/></td>
+  				</tr>
+  				
+  				<tr>
+  					<td>车辆VIN:</td>
+  					<td><input  id="update_vin" style="height: 30px;width: 200px" disabled="true"　readOnly="true"/></td>
+  				</tr>
+  				<tr>
+  					<td>车牌号:</td>
+  					<td><input  id="update_number"style="height: 30px;width: 200px"/></td>
+  				</tr>
+  				
+  				<tr>
+  					<td>车辆所属驾驶员:</td>
+  					<td>
+  						<select id = "update_driver"style="height: 30px; ">
+				  			<option  value="1" >请选择所属驾驶员</option>
+			  				<option value="2" >宋杰</option>
+			  				<option value="3">宋杰1</option>
+			  				<option value="4">宋杰2</option>
+  				  		</select>
+  					</td>
+  				</tr>
+  				
+  				<tr>
+  					<td>车辆所属单位:</td>
+  					<td>
+  						<select id="update_unit" style="height: 30px; ">
+				  			<option value="1" >请选择所属单位</option>
+			  				<option id="sf"   value="2" >顺丰</option>
+			  				<option id ="bs"  value="3">百世</option>
+			  				<option id="yt"   value="4">圆通</option>
+			  				<option id="yz"   value="5">邮政</option>
+			  				<option id="zy"   value="6">则一</option>
+			  				<option id="st"   value="7">申通</option>
+  				  		</select>
+  					</td>
+  				</tr>
+  			</table>
+  			<button class="button white"  onclick="update_addto()">修改</button>
+  			<button class="button white"  id="quxiao">取消修改</button>
+  			</center>
+  		</div>
   </body>
   <script type="text/javascript">
+   
+   
+   
+   //修改一条车辆信息
+   function update(car_id){
+   		var carid = car_id.substring(0,10);
+   		$("#xiugai").show(); //展示修改div
+   		$("#head").hide();  //隐藏头部div
+   		$("#fenye").hide();  //隐藏分页内容div
+   		alert("进入查询修改post"+carid);
+   		$.post("select_car",
+   		{
+   			car_id:carid,
+   		},
+   		function(data){
+   			alert(data);
+   			$("#update_name").val(data);
+   			function update_addto(){
+   				alert("修改成功");
+   			} 
+   		});
+   }
+   
+   //修改车辆信息进行提交
+  
+   		
+   
+   
+   //删除一条车辆信息
+   function deletes(car_iddel){
+   	var car_iddel = car_iddel.substring(0,10);
+   	$.post("car_delectxinxi",{
+   		car_iddel : car_iddel
+   	},function(data){
+   		if(data>0){
+   			alert("删除成功");
+   			window.location.href=window.location.href;   // 刷新当前页面
+   		}else{
+   			alert("删除失败");
+   			window.location.href=window.location.href;   // 刷新当前页面
+   		}
+   	});
+   }
+  	
+
+	//搜索查询
   	$(document).ready(function(){
   		$("#search").click(function(){
   			alert("搜索按钮");
   		});
   	});
+  	
+  	//点击添加信息按钮隐藏头部以及分页div展示添加页面
 	  	$(document).ready(function(){
 	  		$("#add").click(function(){
 	  			$("#head").hide();
@@ -155,6 +268,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	  	});
 	  	
 	  	
+	  	//在添加信息页面点击取消 展示头部 分页div 隐藏添加信息页面
 	  		$(document).ready(function(){
 	  		$("#quxiao").click(function(){
 	  			$("#head").show();
@@ -165,6 +279,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	  	});
   	
   	
+  	//添加车辆信息
   		function addto(){
   		var carname= $("#carname").val();
   		var carlength =$("#carlength").val();

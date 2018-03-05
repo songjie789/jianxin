@@ -11,6 +11,7 @@ import com.ecanal_mail.interceptor.LYBURL;
 import com.ecanal_mail.interceptor.MCURL;
 import com.ecanal_mail.interceptor.OURL;
 import com.ecanal_mail.interceptor.SRURL;
+import com.yuyi.model.User;
 
 public class Interceptor implements HandlerInterceptor  {
 
@@ -24,10 +25,9 @@ public class Interceptor implements HandlerInterceptor  {
 		
 	}
 
-	public void postHandle(HttpServletRequest arg0, HttpServletResponse arg1, Object arg2, ModelAndView arg3)
+	public void postHandle(HttpServletRequest arg0, HttpServletResponse resp, Object arg2, ModelAndView arg3)
 			throws Exception {
 		// TODO Auto-generated method stub
-		
 	}
 
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object arg2) throws Exception {

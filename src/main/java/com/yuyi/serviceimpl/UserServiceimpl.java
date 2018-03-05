@@ -40,7 +40,7 @@ public class UserServiceimpl implements UserService {
 	public int insertid(String username, String password, String phone, String name) {
 		return user.insertid(username, password, phone, name);
 	}
-		//修改密码>>查询用户信息是否存在在进行修改
+	//修改密码>>查询用户信息是否存在在进行修改
 	public String selectupdate(String username, String password, String phone) {
 		return user.selectUpdae(username, password, phone);
 	}

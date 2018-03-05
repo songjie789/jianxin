@@ -50,4 +50,11 @@ public class Car {
 	public void setCar_unit(String car_unit) {
 		this.car_unit = car_unit;
 	}
+	@Override
+	public String toString() {
+		return "Car [car_id=" + car_id + ", car_name=" + car_name + ", car_length=" + car_length + ", car_vin="
+				+ car_vin + ", car_number=" + car_number + ", car_driver=" + car_driver + ", car_unit=" + car_unit
+				+ "]";
+	}
+	
 }

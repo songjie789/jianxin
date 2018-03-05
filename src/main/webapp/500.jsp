@@ -23,14 +23,16 @@
 </body>
 <script type="text/JavaScript">  
 var secs = 5; //倒计时的秒数   
-for(var i=secs;i>=0;i--)   
-{   
-window.setTimeout("doUpdate(" + i + ")", (secs-i) * 1000);   
-}   
-function doUpdate(num)   
-{   
-document.getElementById("sec").innerHTML = num ;   
-if (num == 0){window.location='login'}  //window.location='要跳转的页面'
-}  
+ for(var i=secs;i>=0;i--)   
+	{   
+		window.setTimeout("doUpdate(" + i + ")", (secs-i) * 1000);   
+	}   
+ function doUpdate(num)   
+	{   
+		document.getElementById("sec").innerHTML = num ;   
+		if (num == 0){
+			window.location='login';
+			}  //window.location='要跳转的页面'
+	}  
 </script> 
 </html>

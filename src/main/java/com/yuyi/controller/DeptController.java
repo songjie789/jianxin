@@ -57,24 +57,39 @@ public class DeptController {
 		return "/registration";
 		
 	}
-	
-	//获取MD5加密工具类
-	MD5 md5 = new MD5();
-
-	//登陆之后转向主页面 向数据库添加 登陆的IP登陆的用户名登陆的时间
-	@RequestMapping("indexa")
-	public String logina(@RequestParam("username")String username,@RequestParam("password")String password,
-			HttpSession session) throws Exception {
+	@RequestMapping("index")
+	public String index(@RequestParam("username")String username,@RequestParam("password")String password,
+			HttpSession session) throws UnknownHostException {
 		String md5password = md5.MD5(password);
-		User denglu=user.selectBylogin(username, md5password);
+
+		User a=user.selectBylogin(username, md5password);
+		System.out.println("测试："+a);
+		if(a!=null) {
+			System.out.println(username);
 			session.setAttribute("admin", username);   //存放登陆标记
 			getIP getIP = new getIP();
 			GetTime getTime = new GetTime();
 			String time = getTime.time();
 			String ip = getIP.IP();
 			String admin = (String) session.getAttribute("admin");
-			int a = als.InsertLoginAdmin(ip, admin, time);
-		return "/index";
+			als.InsertLoginAdmin(ip, admin, time);
+			return "redirect:indexa";
+		}
+		else {
+			return "/login";
+		}
+		
+		
+	}
+	
+	//获取MD5加密工具类
+	MD5 md5 = new MD5();
+
+	//登陆之后转向主页面 向数据库添加 登陆的IP登陆的用户名登陆的时间
+	@RequestMapping("indexa")
+	public String logina() throws Exception {
+			
+			return "/index";
 	}
 	
 	//修改密码

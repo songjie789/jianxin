@@ -41,7 +41,7 @@ button{
 </style>
 </head>
 <body>
-<form action="indexa" method="post">
+<form action="index" method="post">
   <section class="loginform">
    <h1>后台管理系统</h1>
    <ul>
