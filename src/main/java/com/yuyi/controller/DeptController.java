@@ -2,19 +2,13 @@ package com.yuyi.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.security.interfaces.RSAPrivateKey;
-import java.security.interfaces.RSAPublicKey;
-import java.text.SimpleDateFormat;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.jasper.tagplugins.jstl.core.Out;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -22,7 +16,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.eyunhe.rsatools.RSAUtils;
 import com.yuyi.model.Batch;
 import com.yuyi.model.User;
 import com.yuyi.service.AdminLoginService;
@@ -30,8 +23,6 @@ import com.yuyi.service.UserService;
 import com.yuyi.util.GetTime;
 import com.yuyi.util.MD5;
 import com.yuyi.util.getIP;
-
-import javassist.expr.NewArray;
 
 
 @Controller
@@ -61,10 +52,9 @@ public class DeptController {
 	public String index(@RequestParam("username")String username,@RequestParam("password")String password,
 			HttpSession session) throws UnknownHostException {
 		String md5password = md5.MD5(password);
-
 		User a=user.selectBylogin(username, md5password);
-		System.out.println("测试："+a);
-		if(a!=null) {
+		System.out.println("登陆账号："+a);
+		if(a!=null) {	
 			System.out.println(username);
 			session.setAttribute("admin", username);   //存放登陆标记
 			getIP getIP = new getIP();

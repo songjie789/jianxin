@@ -26,8 +26,8 @@
 <body style="padding-bottom:0px;">
 <div class="pageTop">
 			<div class="page">
-				<img src="img/coin02.png" /><span><a href="carcontent">首页</a>&nbsp;-&nbsp;<a
-					href="carcontent">驾驶员管理</a>&nbsp;-</span>&nbsp;驾驶员信息
+				<img src="img/coin02.png" /><span><a href="pilot">首页</a>&nbsp;-&nbsp;<a
+					href="pilot">驾驶员管理</a>&nbsp;-</span>&nbsp;驾驶员信息
 			</div>
 			</div>		
   			

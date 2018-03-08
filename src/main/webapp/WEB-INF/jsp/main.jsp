@@ -21,16 +21,14 @@
 
 </head>
 <body style="padding-bottom:3px;">
-<div style="width:1600px;margin:20px;top:-20px;" id="MainForm">
+<div style="width:1200px;margin:20px;top:-20px;" id="MainForm">
 	
 	<table width="100%" height="100%" id="testtable2" cellpadding="10px" cellspacing="50px">
 		<thead><tr>
 			<th>编号</th>
 			<th>登陆账号</th>
-			<th>登录姓名</th>
-			<th>登录时间</th>
-			
-			
+			<th>登陆时间</th>
+			<th>登录IP</th>
 			</tr>
 		</thead>
 		<tbody>
