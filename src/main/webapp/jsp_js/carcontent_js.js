@@ -5,36 +5,68 @@
  * 添加车辆
  * 修改车辆信息
  * 删除车辆信息
+ * 条件查询
  * 
  */
 
-/*jshint browser: true, strict: true, undef: true */
-
      //修改一条车辆信息
-   function update(car_id){
-	   var ids=$('#tbList tr td:first-child').map(function(){return $(this).text()}).get().join(',')
-	   alert(ids);
+		function update(car_id){
    		var carid = car_id.substring(0,10);
    		$("#xiugai").show(); //展示修改div
    		$("#head").hide();  //隐藏头部div
    		$("#fenye").hide();  //隐藏分页内容div
    		alert("进入查询修改post"+carid);
-   		$.post("select_car",
-   		{
-   			car_id:carid,
-   		},
-   		function(data){
-   			alert(data);
-   			$("#update_name").val(data);
-   			function update_addto(){
-   				alert("修改成功");
-   			} 
-   		});
+   		$.post(
+   				"select_car",
+   				{car_id:carid},
+   				function(data){
+   					var obj = JSON.parse(data);  //json数组
+   					var carname = obj[0].car_name;
+   					var carlength = obj[0].car_length;
+   					var carvin = obj[0].car_vin;
+   					var carnumber = obj[0].car_number;
+   					var carunit = obj[0].car_unit;
+   					$("#update_name").val(carname);
+   					$("#update_length").val(carlength);
+   					$("#update_vin").val(carvin);
+   					$("#update_number").val(carnumber);
+   				}
+   		);
    }
-   
-   //修改车辆信息进行提交
-  
-   		
+		
+		
+		
+		 //修改车辆信息
+		   function update_addto(){
+				var car_numbers = $("#update_number").val();//获取车牌号
+				//获取驾驶员的下拉列表值
+		  		 var  cardriver=document.getElementById("update_driver");
+		  		 var cardriver_text=$("#update_driver option:selected");
+		  		 var cardrivers = cardriver_text.text(); //获取车辆所属驾驶员的text值
+		  		 //获取所属单位的下拉列表框
+		  		 var  unit=document.getElementById("update_unit");
+		  		 var unit_text=$("#update_unit option:selected");
+		  		 var units= unit_text.text();  //获取车辆所属单位的text值
+		  		 var vin = $("#update_vin").val();
+		  		
+		 		alert("车牌号 : "+car_numbers+"---------所属单位 : " +units+"-------所属驾驶员 : "+cardrivers);
+		 		$.post("modify",
+						{
+		 					car_vins :vin,
+							car_numbers:car_numbers,
+							car_units:units,
+							car_drivers:cardrivers
+							},
+						function(data){
+							if(data>0){
+								alert("修改成功");
+							}else{
+								alert("修改失败");
+							}
+							
+						});
+			}
+		   
    
    
    //删除一条车辆信息
@@ -52,6 +84,8 @@
    		}
    	});
    }
+   
+  
   	
 
 	//搜索查询
@@ -81,7 +115,32 @@
 	  		});
 	  	});
   	
-  	
+	  		//查询车牌号是否存在在进行添加车辆 input失去焦点的时候进行ajax
+	  		$(document).ready(function(){
+		  		  $("#carnumber").blur(function(){
+		  			  	var carnumber = $("#carnumber").val();
+		  		   		$.post("select_carnumber",{car_number : carnumber},
+		  		   		function(data){
+		  		   			if(data==1){
+		  		   				alert("车牌号已存在请重新输入");
+		  		   			}
+		  		   		});						
+		  		  });
+		  		});
+	  		
+	  		//查询VIN是否存在在进行添加车辆 input失去焦点的时候进行ajax
+	  		$(document).ready(function(){
+	  		  $("#carvin").blur(function(){
+	  			  	var vin = $("#carvin").val();
+	  		   		$.post("select_vin",{vins : vin},
+	  		   		function(data){
+	  		   			if(data==1){
+	  		   				alert("VIN已存在请重新输入");
+	  		   			}
+	  		   		});						
+	  		  });
+	  		});
+	  		
   	//添加车辆信息
   		function addto(){
   		var carname= $("#carname").val();
@@ -139,3 +198,31 @@
   			});
   		}
 
+  		
+  		
+  		//顶部条件查询
+  		function search(){
+  			var car_id = $("#search_car_id").val(); //获取车辆ID
+  			var car_name = $("#search_car_name").val(); //获取车辆名称
+  			var car_number = $("#search_car_number").val();//获取车牌号
+  	  		//获取驾驶员的下拉列表值
+  	  		 var  cardriver=document.getElementById("search_car_driver");
+  	  		 var cardriver_text=$("#search_car_driver option:selected");
+  	  		 var cardrivers = cardriver_text.text(); //获取车辆所属驾驶员的text值
+  	  		 //获取所属单位的下拉列表框
+  	  		 var  unit=document.getElementById("search_car_unit");
+  	  		 var unit_text=$("#search_car_unit option:selected");
+  	  		 var units= unit_text.text();  //获取车辆所属单位的text值
+  			
+  	  		 $.post("search",
+  	  				 {
+  	  			 	car_id:car_id,
+  	  			 	car_name:car_name,
+  	  			 	car_number : car_number,
+  	  			 	car_drivers :cardrivers,
+  	  			 	unit:units
+  	  				 },
+  	  				 function(data){
+  	  					 
+  	  				 });
+  		}

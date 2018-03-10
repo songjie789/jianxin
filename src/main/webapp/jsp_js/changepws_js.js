@@ -11,6 +11,7 @@
 				window.location.reload; 							
 		  });
 		});
+		
 		function checkpwd1(){
 			var username = $("#username").val();
 			var password = $("#password").val();

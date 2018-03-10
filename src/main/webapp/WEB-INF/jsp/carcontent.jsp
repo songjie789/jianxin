@@ -11,7 +11,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <base href="<%=basePath%>">
     
     <title>车辆信息</title>
-    
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
 	<meta http-equiv="expires" content="0">    
@@ -22,6 +21,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <script type="text/javascript" src="js/jquery.min.js"></script>
 <!-- 引入车辆信息表处理的js事件的js文件 -->
 <script type="text/javascript" src="jsp_js/carcontent_js.js"></script>
+<script type="text/javascript" src="js/jquery.easyui.min.js" ></script>
 
   </head>
   <body >
@@ -31,27 +31,29 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					href="carcontent">车辆管理</a>&nbsp;-</span>&nbsp;车辆信息
 			</div>
 			</div>
+			
+			<!--条件搜索  -->
   		<div class="head"  id = "head">
-  			车辆编号:<input style="height: 30px;width: 100px"/> &nbsp;&nbsp;
+  			车辆编号:<input style="height: 30px;width: 100px" id = "search_car_id"/> &nbsp;&nbsp;
   			
-  			车辆名称:<input style="height: 30px;width: 100px"/>&nbsp;&nbsp;
+  			车辆名称:<input style="height: 30px;width: 100px" id = search_car_name/>&nbsp;&nbsp;
   			
-  			车牌号:<input style="height: 30px;width: 100px"/>&nbsp;&nbsp;
+  			车牌号:<input style="height: 30px;width: 100px" id ="search_car_number"/>&nbsp;&nbsp;
   			
-  			车辆所属驾驶员:<select style="height: 30px; ">
+  			车辆所属驾驶员:<select id = "search_car_driver"style="height: 30px; ">
   			<option value="1" size="20px">请选择所属驾驶员</option>
   				<option value="1" size="20px">宋杰</option>
   				<option value="2">宋杰1</option>
   				<option value="3">宋杰2</option>
   			</select>&nbsp;&nbsp;
   			
-  			车辆所属单位:<select style="height: 30px; ">
+  			车辆所属单位:<select id = "search_car_unit" style="height: 30px; ">
   			<option value="1" size="20px">请选择所属单位</option>
   				<option value="1" size="20px">顺丰</option>
   				<option value="2">百世</option>
   				<option value="3">圆通</option>
   			</select>
-  			<button class="button white" id="search" >搜索</button>
+  			<button class="button white"  onclick="search()">搜索</button>
   			<button class="button white" id = "add">添加信息</button>
   		</div>
   		
@@ -61,7 +63,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   		<!-- 分页 -->
   		<div id= "fenye"style="width:1100px;margin:1px;top:10px;" id="MainForm">
 <br/>
-	<table width="100%" height="100%" id="tbList" >
+	<table width="100%" height="100%" id="dg" data-options="
+31 rownumbers:true,
+32 singleSelect:true,
+33 autoRowHeight:false,
+34 pagination:true,
+35 resizeHandle:'right'">
 		<thead><tr>
 			<th>编号</th>
 			<th>车辆名称</th>
@@ -74,9 +81,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		</thead>
 		<tbody>
 		<c:forEach items="${requestScope.selectCar}" var="second">
-			<tr id = "tr">
-			<td id ="car_id">${second.car_id }</td>
-			<td id = "car_name">${second.car_name }</td>
+			<tr>
+			<td>${second.car_id }</td>
+			<td>${second.car_name }</td>
 			<td>${second.car_length }</td>
 			<td>${second.car_vin }</td>
 			<td>${second.car_number}</td>
@@ -105,12 +112,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   				
   				<tr>
   					<td>车辆名称长度:</td>
-  					<td><input class="inputa"  id="carlength" style="height: 30px;width: 200px"/></td>
+  					<td><input class="inputa"  id="carlength" style="height: 30px;width: 200px" /></td>
   				</tr>
   				
   				<tr>
   					<td>车辆名称VIN:</td>
-  					<td><input class="inputa"  id="carvin" style="height: 30px;width: 200px"/></td>
+  					<td><input class="inputa"  id="carvin" style="height: 30px;width: 200px" maxlength="17"/><span id= "vin_span"></span></td>
   				</tr>
   				<tr>
   					<td>车牌号:</td>
@@ -208,5 +215,4 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   			</center>
   		</div>
   </body>
-
 </html>
