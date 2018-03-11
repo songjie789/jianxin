@@ -20,18 +20,21 @@
 <script type="text/javascript" src="js/jquery.paginate.js" ></script>
 <script type="text/javascript" src="js/jquery.yhhDataTable.js" ></script>
 <script type="text/javascript" src="js/index.js" ></script>
-<script type="text/javascript" src="jsp_js/carcontent_js.js"></script>
 <script type="text/javascript" src="jsp_js/pilot_js.js"></script>
+<script type="text/javascript" src="jsp_js/carcontent_js.js"></script>
 
 </head>
 <body style="padding-bottom:0px;">
-<div class="pageTop">
-			<div class="page">
-				<img src="img/coin02.png" /><span><a href="pilot">首页</a>&nbsp;-&nbsp;<a
-					href="pilot">驾驶员管理</a>&nbsp;-</span>&nbsp;驾驶员信息
-			</div>
-			</div>		
-  			
+	<!-- 头部 -->
+	<div class="pageTop">
+				<div class="page">
+					<img src="img/coin02.png" /><span><a href="pilot">首页</a>&nbsp;-&nbsp;<a
+						href="pilot">驾驶员管理</a>&nbsp;-</span>&nbsp;驾驶员信息
+				</div>
+	</div>		
+	
+	
+	 <!-- 分页  -->			
 <div style="width:1650px;margin:20px;top:0px;" id="MainForm">
 	<button class="button white" onclick="add_driver()">添加信息</button>
 	<table width="100%" height="100%" id="testtable2" cellpadding="10px" cellspacing="50px">
@@ -69,7 +72,7 @@
 <!-- 添加驾驶员信息 默认隐藏,点击添加按钮才显示 -->
   		<br/><br/><br/><br/><br/>
   		<!-- 添加车辆信息 -->
-  		<div class="123" id="add1">
+  		<div>
   			<center>
   			<table cellspacing="20px">
   				<tr>

@@ -9,6 +9,8 @@ import org.apache.ibatis.annotations.Select;
 import com.yuyi.model.Car;
 import com.yuyi.model.jiashiyuan;
 
+
+
 public interface JiaShiYuanDao {
 	//新增驾驶员信息
 	@Insert("insert into jiashiyuan_table(name,age,shenfezheng_id,jiashiyuan_name,zhuzhi,phone,car_number,card) values(#{name},#{age},#{shenfezheng_id},#{jiashiyuan_name},#{zhuzhi},#{phone},#{car_number},#{card})")
@@ -22,6 +24,6 @@ public interface JiaShiYuanDao {
 	List<Car> Select_Car_Number();
 	
 	//添加驾驶员信息
-	@Insert("insert into driver_table (driver_name,driver_car_number,driver_address,driver_phone) values (driver_name=#{driver_name},driver_car_number=#{driver_car_number},driver_address=#{driver_address},driver_phone=#{driver_phone})")
-	int Add_Driver(@Param("driver_name")String driver_name, @Param("driver_car_number")String driver_car_number, @Param("driver_address")String driver_address, @Param("driver_phone")String driver_phone);
+	@Insert("INSERT INTO driver_table (driver_name,driver_car_number,driver_address,driver_phone) VALUES (#{driver_name},#{driver_car_number},#{driver_address},#{driver_phone})")
+	int Add_Driver(@Param("driver_name")String driver_name,@Param("driver_car_number")String driver_car_number, @Param("driver_address")String driver_address, @Param("driver_phone")String driver_phone);
 }

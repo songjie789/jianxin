@@ -52,6 +52,7 @@ public class JSYController {
 			System.out.println("驾驶员姓名 : "+driver_name+"------车牌号 : "+driver_car_number+"-----------住址 : "+driver_address+"-------------电话 : "+driver_phone);
 			int add_ok = jsy.Add_Driver(driver_name,driver_car_number,driver_address,driver_phone);
 			PrintWriter out = response.getWriter();
+			System.out.println(add_ok);
 			out.print(add_ok);
 	}
 	
