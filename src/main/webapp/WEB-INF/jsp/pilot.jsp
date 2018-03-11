@@ -74,16 +74,16 @@
   			<table cellspacing="20px">
   				<tr>
   					<td>驾驶员姓名:</td>
-  					<td><input style="height: 30px;width: 200px"/></td>
+  					<td><input id="driver_name"style="height: 30px;width: 200px"/></td>
   				</tr>
   				
   				<tr>
   					<td>驾驶员所属车辆:</td>
  					<td>
-  						<select name="district">
-							<option value="0">请选择</option>
+  						<select id = "driver_number" name="district" style="width: 205px">
+							<option value="0">请选择车辆</option>
 							<c:forEach var="car_number" items="${car_number_ok}" >
-							<option value=${dcar_number}>${car_number }</option>
+							<option value=${dcar_number}>${car_number.car_number}</option>
 							</c:forEach>
 						</select>
   					</td>
@@ -91,11 +91,11 @@
   				
   				<tr>
   					<td>住址:</td>
-  					<td><input style="height: 30px;width: 200px" maxlength="17"/></td>
+  					<td><input id="driver_address"style="height: 30px;width: 200px" maxlength="17"/></td>
   				</tr>
   				<tr>
   					<td>联系方式:</td>
-  					<td><input style="height: 30px;width: 200px"/></td>
+  					<td><input id="driver_phone"style="height: 30px;width: 200px"/></td>
   				</tr>
   			</table>
   			<button class="button white"   onclick="add_driver()">添加</button>

@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.yuyi.dao.JiaShiYuanDao;
+import com.yuyi.model.Car;
 import com.yuyi.model.jiashiyuan;
 import com.yuyi.service.JiaShiYuanService;
 
@@ -43,9 +44,16 @@ public class JiaShiYuanServiceimpl implements JiaShiYuanService {
 	
 	//加载车牌号下拉框的值
 	@Override
-	public String Select_Car_Number() {
+	public List<Car> Select_Car_Number() {
 		// TODO Auto-generated method stub
 		return jsy.Select_Car_Number();
+	}
+	
+	
+	//添加驾驶员信息
+	@Override
+	public int Add_Driver(String driver_name, String driver_car_number, String driver_address, String driver_phone) {
+		return jsy.Add_Driver(driver_name,driver_car_number,driver_address,driver_phone);
 	}
 
 }
