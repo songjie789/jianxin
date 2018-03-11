@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.ibatis.jdbc.SQL;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -32,24 +33,23 @@ public class CarController {
 	@Qualifier("car")
 	private CarService car;
 	
-	//车辆条件查询
+	/*//车辆条件查询
 	@RequestMapping("search")
-	public StringBuffer  search (@RequestParam("car_id")String car_id,@RequestParam("car_name")String car_name,
-									@RequestParam("car_number")String car_number,@RequestParam("car_driver")String car_drivet,
-									@RequestParam("car_unit")String car_unit,HttpServletResponse response) throws IOException{
-		PrintWriter out = response.getWriter();
-		StringBuffer sb = new StringBuffer();
-		sb.append("select * from car_table where");
-		if(car_id!=null){
-			sb.append("car_id = "+car_id+"and");
-		}
-		if(car_name!=null){
-			sb.append(car_name);
-		}
-		return sb;
-		
+	public String search (@RequestParam("car_id")String car_id,@RequestParam("car_name")String car_name,
+			@RequestParam("car_number")String car_number,@RequestParam("car_driver")String car_drivet,
+			@RequestParam("car_unit")String car_unit,HttpServletResponse response) throws IOException{
+			String sql = "select * from car_table";
+			if(car_id!=null){
+				sql +="where car_id = #{car_id} and";
+	        }
+	        if(car_id==null && car_name!=null){
+	        	sql +="where car_name = #{car_name}";
+	        }else if(car_id!=null && car_name!=null){
+	        	sql +="car_name = #{car_name} and";
+	        }
+	        return sql;
 	}
-	
+	*/
 	
 	//添加车辆先先查询车牌号是否存在
 		@RequestMapping("select_carnumber")
@@ -134,9 +134,9 @@ public class CarController {
  * 2018.3.9
  * */
 		//进入车辆维修页面
-		@RequestMapping("autorepair")
+		@RequestMapping("user")
 		public String Autorepair(){
-			return "/autorepair";
+			return "/user";
 		}
 		
 		//输入车辆编号进行添加

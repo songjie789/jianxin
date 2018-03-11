@@ -40,4 +40,12 @@ public class JiaShiYuanServiceimpl implements JiaShiYuanService {
 		return jsy.SeleceJiaShiYuan();
 	}
 
+	
+	//加载车牌号下拉框的值
+	@Override
+	public String Select_Car_Number() {
+		// TODO Auto-generated method stub
+		return jsy.Select_Car_Number();
+	}
+
 }

@@ -15,7 +15,6 @@
    		$("#xiugai").show(); //展示修改div
    		$("#head").hide();  //隐藏头部div
    		$("#fenye").hide();  //隐藏分页内容div
-   		alert("进入查询修改post"+carid);
    		$.post(
    				"select_car",
    				{car_id:carid},
@@ -49,7 +48,6 @@
 		  		 var units= unit_text.text();  //获取车辆所属单位的text值
 		  		 var vin = $("#update_vin").val();
 		  		
-		 		alert("车牌号 : "+car_numbers+"---------所属单位 : " +units+"-------所属驾驶员 : "+cardrivers);
 		 		$.post("modify",
 						{
 		 					car_vins :vin,
@@ -60,12 +58,18 @@
 						function(data){
 							if(data>0){
 								alert("修改成功");
+								window.location.href=window.location.href;   // 刷新当前页面
 							}else{
 								alert("修改失败");
 							}
 							
 						});
 			}
+		   
+		   //取消修改
+		   function quxiao(){
+			   window.location.href=window.location.href;   // 刷新当前页面(相当于直接舒心到车辆信息页面)
+		   }
 		   
    
    
@@ -88,12 +92,36 @@
   
   	
 
-	//搜索查询
+   	//顶部条件查询
   	$(document).ready(function(){
   		$("#search").click(function(){
-  			alert("搜索按钮");
+  			var car_id = $("#search_car_id").val(); //获取车辆ID
+  			var car_name = $("#search_car_name").val(); //获取车辆名称
+  			var car_number = $("#search_car_number").val();//获取车牌号
+  	  		//获取驾驶员的下拉列表值
+  	  		 var  cardriver=document.getElementById("search_car_driver");
+  	  		 var cardriver_text=$("#search_car_driver option:selected");
+  	  		 var cardrivers = cardriver_text.text(); //获取车辆所属驾驶员的text值
+  	  		 //获取所属单位的下拉列表框
+  	  		 var  unit=document.getElementById("search_car_unit");
+  	  		 var unit_text=$("#search_car_unit option:selected");
+  	  		 var units= unit_text.text();  //获取车辆所属单位的text值
+  	  		 alert("车辆编号 : "+car_id+"-----车辆名称 : "+car_name+"------车牌号 : "+car_number+"------车辆所属驾驶员 : "+cardrivers+"------车辆所属单位 :  : "+units);
+  	  		 $.post("search",
+  	  				 {
+  	  			 	car_id:car_id,
+  	  			 	car_name:car_name,
+  	  			 	car_number : car_number,
+  	  			 	car_drivers :cardrivers,
+  	  			 	unit:units
+  	  				 },
+  	  				 function(data){
+  	  					 alert(data)
+  	  				 });
   		});
   	});
+  	
+  	
   	
   	//点击添加信息按钮隐藏头部以及分页div展示添加页面
 	  	$(document).ready(function(){
@@ -103,6 +131,8 @@
 	  			$("#add1").show();
 	  		});
 	  	});
+	  	
+	  	
 	  	
 	  	
 	  	//在添加信息页面点击取消 展示头部 分页div 隐藏添加信息页面
@@ -115,6 +145,8 @@
 	  		});
 	  	});
   	
+	  		
+	  		
 	  		//查询车牌号是否存在在进行添加车辆 input失去焦点的时候进行ajax
 	  		$(document).ready(function(){
 		  		  $("#carnumber").blur(function(){
@@ -128,6 +160,8 @@
 		  		  });
 		  		});
 	  		
+	  		
+	  		
 	  		//查询VIN是否存在在进行添加车辆 input失去焦点的时候进行ajax
 	  		$(document).ready(function(){
 	  		  $("#carvin").blur(function(){
@@ -140,6 +174,8 @@
 	  		   		});						
 	  		  });
 	  		});
+	  		
+	  		
 	  		
   	//添加车辆信息
   		function addto(){
@@ -196,33 +232,4 @@
   					alert("添加失败");
   				}
   			});
-  		}
-
-  		
-  		
-  		//顶部条件查询
-  		function search(){
-  			var car_id = $("#search_car_id").val(); //获取车辆ID
-  			var car_name = $("#search_car_name").val(); //获取车辆名称
-  			var car_number = $("#search_car_number").val();//获取车牌号
-  	  		//获取驾驶员的下拉列表值
-  	  		 var  cardriver=document.getElementById("search_car_driver");
-  	  		 var cardriver_text=$("#search_car_driver option:selected");
-  	  		 var cardrivers = cardriver_text.text(); //获取车辆所属驾驶员的text值
-  	  		 //获取所属单位的下拉列表框
-  	  		 var  unit=document.getElementById("search_car_unit");
-  	  		 var unit_text=$("#search_car_unit option:selected");
-  	  		 var units= unit_text.text();  //获取车辆所属单位的text值
-  			
-  	  		 $.post("search",
-  	  				 {
-  	  			 	car_id:car_id,
-  	  			 	car_name:car_name,
-  	  			 	car_number : car_number,
-  	  			 	car_drivers :cardrivers,
-  	  			 	unit:units
-  	  				 },
-  	  				 function(data){
-  	  					 
-  	  				 });
   		}

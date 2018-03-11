@@ -18,10 +18,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<meta http-equiv="description" content="This is my page">
 	<link rel="stylesheet" type="text/css" href="css/carcontent.css"/>
 	<link rel="stylesheet" type="text/css" href="css/css.css" />
-<script type="text/javascript" src="js/jquery.min.js"></script>
-<!-- 引入车辆信息表处理的js事件的js文件 -->
-<script type="text/javascript" src="jsp_js/carcontent_js.js"></script>
-<script type="text/javascript" src="js/jquery.easyui.min.js" ></script>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<!-- 引入车辆信息表处理的js事件的js文件 -->
+	<script type="text/javascript" src="jsp_js/carcontent_js.js"></script>
+	<script type="text/javascript" src="js/jquery.easyui.min.js" ></script>
 
   </head>
   <body >
@@ -36,7 +36,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   		<div class="head"  id = "head">
   			车辆编号:<input style="height: 30px;width: 100px" id = "search_car_id"/> &nbsp;&nbsp;
   			
-  			车辆名称:<input style="height: 30px;width: 100px" id = search_car_name/>&nbsp;&nbsp;
+  			车辆名称:<input style="height: 30px;width: 100px" id = "search_car_name"/>&nbsp;&nbsp;
   			
   			车牌号:<input style="height: 30px;width: 100px" id ="search_car_number"/>&nbsp;&nbsp;
   			
@@ -53,7 +53,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   				<option value="2">百世</option>
   				<option value="3">圆通</option>
   			</select>
-  			<button class="button white"  onclick="search()">搜索</button>
+  			<button class="button white"  id="search">搜索</button>
   			<button class="button white" id = "add">添加信息</button>
   		</div>
   		
@@ -64,11 +64,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   		<div id= "fenye"style="width:1100px;margin:1px;top:10px;" id="MainForm">
 <br/>
 	<table width="100%" height="100%" id="dg" data-options="
-31 rownumbers:true,
-32 singleSelect:true,
-33 autoRowHeight:false,
-34 pagination:true,
-35 resizeHandle:'right'">
+			31 rownumbers:true,
+			32 singleSelect:true,
+			33 autoRowHeight:false,
+			34 pagination:true,
+			35 resizeHandle:'right'">
 		<thead><tr>
 			<th>编号</th>
 			<th>车辆名称</th>
@@ -211,7 +211,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   				</tr>
   			</table>
   			<button class="button white"  onclick="update_addto()">修改</button>
-  			<button class="button white"  id="quxiao">取消修改</button>
+  			<button class="button white"  onclick="quxiao()">取消修改</button>
   			</center>
   		</div>
   </body>

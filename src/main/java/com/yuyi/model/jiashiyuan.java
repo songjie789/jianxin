@@ -9,93 +9,39 @@ package com.yuyi.model;
  * 
  */
 public class jiashiyuan {
-	private int id;	//id
-	private String name;	//姓名
-	private int age;	//年龄
-	private int shenfezheng_id;	//车辆id
-	private int jiashiyuan_name;	//驾驶证id；
-	private String zhuzi;	//住址
-	private String phone;	//手机
-	private String car_number;	//使用车辆编号
-	private String card;	//身份证号
-	
+	private int id;	//驾驶员id (自动编号)
+	private String driver_name;//驾驶员姓名
+	private String driver_car_number;//驾驶员所属车辆车牌号
+	private String driver_address;//驾驶员住址
+	private String driver_phone;//驾驶员联系方式
 	public int getId() {
 		return id;
 	}
-
 	public void setId(int id) {
 		this.id = id;
 	}
-
-	public String getName() {
-		return name;
+	public String getDriver_name() {
+		return driver_name;
 	}
-
-	public void setName(String name) {
-		this.name = name;
+	public void setDriver_name(String driver_name) {
+		this.driver_name = driver_name;
 	}
-
-	public int getAge() {
-		return age;
+	public String getDriver_car_number() {
+		return driver_car_number;
 	}
-
-	public void setAge(int age) {
-		this.age = age;
+	public void setDriver_car_number(String driver_car_number) {
+		this.driver_car_number = driver_car_number;
 	}
-
-	public int getShenfezheng_id() {
-		return shenfezheng_id;
+	public String getDriver_address() {
+		return driver_address;
 	}
-
-	public void setShenfezheng_id(int shenfezheng_id) {
-		this.shenfezheng_id = shenfezheng_id;
+	public void setDriver_address(String driver_address) {
+		this.driver_address = driver_address;
 	}
-
-	public int getJiashiyuan_name() {
-		return jiashiyuan_name;
+	public String getDriver_phone() {
+		return driver_phone;
 	}
-
-	public void setJiashiyuan_name(int jiashiyuan_name) {
-		this.jiashiyuan_name = jiashiyuan_name;
+	public void setDriver_phone(String driver_phone) {
+		this.driver_phone = driver_phone;
 	}
-
-	public String getZhuzi() {
-		return zhuzi;
-	}
-
-	public void setZhuzi(String zhuzi) {
-		this.zhuzi = zhuzi;
-	}
-
-	public String getPhone() {
-		return phone;
-	}
-
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
-
-	public String getCar_number() {
-		return car_number;
-	}
-
-	public void setCar_number(String car_number) {
-		this.car_number = car_number;
-	}
-
-	public String getCard() {
-		return card;
-	}
-
-	public void setCard(String card) {
-		this.card = card;
-	}
-
-	@Override
-	public String toString() {
-		return "jiashiyuan [age=" + age + ", car_number=" + car_number + ", card=" + card + ", id=" + id
-				+ ", jiashiyuan_name=" + jiashiyuan_name + ", name=" + name + ", phone=" + phone + ", shenfezheng_id="
-				+ shenfezheng_id + ", zhuzi=" + zhuzi + "]";
-	}
-	
 }
