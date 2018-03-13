@@ -35,10 +35,12 @@ public class CarController {
 	
 	
 	//车辆条件查询
-	@RequestMapping("search")
-	public void search (@RequestParam("car_id")String car_id,@RequestParam("car_name")String car_name,
+	@RequestMapping("ComprehensiveSearch")
+	public void ComprehensiveSearch (@RequestParam("car_id")String car_id,@RequestParam("car_name")String car_name,
 			@RequestParam("car_number")String car_number,@RequestParam("car_driver")String car_drivet,
 			@RequestParam("car_unit")String car_unit,HttpServletResponse response) throws IOException{
+		System.out.println("进入车辆信息多条件查询 查询内容如下");
+		System.out.println("车辆编号:"+car_id+"-----车辆名称 : "+car_name+"-----车牌号 : "+car_number+"-----车辆所属驾驶员 : "+car_drivet+"车辆所属单位 : "+car_unit);
 		PrintWriter out= response.getWriter();
 		Car car1 = new Car();
 		car1.setCar_id(car_id);

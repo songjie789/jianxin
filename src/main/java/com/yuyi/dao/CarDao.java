@@ -4,14 +4,13 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.ResultMap;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.SelectProvider;
 import org.apache.ibatis.annotations.Update;
 
-import com.fasterxml.jackson.databind.ser.std.StdKeySerializers.Dynamic;
+import com.yuyi.controller.DynamicSQL;
 import com.yuyi.model.Car;
 
 
@@ -48,7 +47,6 @@ public interface CarDao {
 	int updatecar(@Param("car_vins")String car_vins,@Param("car_drivers")String car_drivers,@Param("car_numbers")String car_numbers,  @Param("car_units")String car_units );
 	
 	
-	@SelectProvider(type=Dynamic.class,method="Select_Synthesis_Car")
-	@ResultMap("Car")
+	@SelectProvider(type=DynamicSQL.class,method="Select_Synthesis_Car")
 	List<Car> Select_Synthesis_Car(Car car1);
 }

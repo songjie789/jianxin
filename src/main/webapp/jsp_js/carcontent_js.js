@@ -105,18 +105,18 @@
   	  		 var unit_text=$("#search_car_unit option:selected");
   	  		 var units= unit_text.text();  //获取车辆所属单位的text值
   	  		 alert("车辆编号 : "+car_id+"-----车辆名称 : "+car_name+"------车牌号 : "+car_number+"------车辆所属驾驶员 : "+cardrivers+"------车辆所属单位 :  : "+units);
-  	  		 $.post("search",
+  	  		 $.post("ComprehensiveSearch",
   	  				 {
   	  			 	car_id:car_id,
   	  			 	car_name:car_name,
   	  			 	car_number : car_number,
   	  			 	car_drivers :cardrivers,
-  	  			 	unit:units
+  	  			 	car_unit:units
   	  				 },
   	  				 function(data){
   	  					 alert(data);
   	  				 });
-  		});
+  			});
   	});
   	
   	
