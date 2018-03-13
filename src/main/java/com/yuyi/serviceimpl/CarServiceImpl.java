@@ -59,4 +59,11 @@ public class CarServiceImpl implements CarService{
 	public int updateCar(String car_vins, String car_numbers, String car_units, String car_drivers) {
 		return car.updatecar(car_vins, car_drivers, car_numbers, car_units);
 	}
+	
+	//条件查询
+	@Override
+	public List<Car> Select_Synthesis_Car(Car car1) {
+		// TODO Auto-generated method stub
+		return  car.Select_Synthesis_Car(car1);
+	}
 }

@@ -1,6 +1,4 @@
-/*!
- * 
- *
+/*
  * 车辆信息页面
  * 添加车辆
  * 修改车辆信息
@@ -116,7 +114,7 @@
   	  			 	unit:units
   	  				 },
   	  				 function(data){
-  	  					 alert(data)
+  	  					 alert(data);
   	  				 });
   		});
   	});

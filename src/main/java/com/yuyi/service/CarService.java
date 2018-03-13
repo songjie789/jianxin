@@ -23,6 +23,9 @@ public interface CarService {
 	//修改车辆信息
 	int updateCar(String car_vins, String car_numbers, String car_units, String car_drivers);
 	
+	//条件查询
+	List<Car> Select_Synthesis_Car(Car car1);
+	
 	
 	
 }

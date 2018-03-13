@@ -33,23 +33,28 @@ public class CarController {
 	@Qualifier("car")
 	private CarService car;
 	
-	/*//车辆条件查询
+	
+	//车辆条件查询
 	@RequestMapping("search")
-	public String search (@RequestParam("car_id")String car_id,@RequestParam("car_name")String car_name,
+	public void search (@RequestParam("car_id")String car_id,@RequestParam("car_name")String car_name,
 			@RequestParam("car_number")String car_number,@RequestParam("car_driver")String car_drivet,
 			@RequestParam("car_unit")String car_unit,HttpServletResponse response) throws IOException{
-			String sql = "select * from car_table";
-			if(car_id!=null){
-				sql +="where car_id = #{car_id} and";
-	        }
-	        if(car_id==null && car_name!=null){
-	        	sql +="where car_name = #{car_name}";
-	        }else if(car_id!=null && car_name!=null){
-	        	sql +="car_name = #{car_name} and";
-	        }
-	        return sql;
+		PrintWriter out= response.getWriter();
+		Car car1 = new Car();
+		car1.setCar_id(car_id);
+		car1.setCar_name(car_name);
+		car1.setCar_number(car_number);
+		car1.setCar_driver(car_drivet);
+		car1.setCar_unit(car_unit);
+		
+		List<Car> select_car = car.Select_Synthesis_Car(car1);
+		if(select_car!=null) 
+			System.out.println("条件查询"+select_car);
+		if(select_car==null)
+			System.out.println("条件查询"+select_car);
+		out.print(select_car);
 	}
-	*/
+	
 	
 	//添加车辆先先查询车牌号是否存在
 		@RequestMapping("select_carnumber")
