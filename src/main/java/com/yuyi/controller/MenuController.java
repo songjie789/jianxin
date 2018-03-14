@@ -65,9 +65,4 @@ public class MenuController {
 		out.print(ok);
 	}
 	
-	@RequestMapping("ss")
-	public String aa() {
-		return "/NewFile";
-		
-	}
 }

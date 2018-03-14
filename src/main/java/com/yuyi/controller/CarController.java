@@ -19,9 +19,11 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.portlet.bind.annotation.ResourceMapping;
 
 import com.itextpdf.text.log.SysoCounter;
 import com.yuyi.model.Car;
+import com.yuyi.model.jiashiyuan;
 import com.yuyi.service.CarService;
 
 import net.sf.json.JSON;
@@ -35,8 +37,8 @@ public class CarController {
 	
 	
 	//车辆条件查询
-	@RequestMapping("ComprehensiveSearch")
-	public void ComprehensiveSearch (@RequestParam("car_id")String car_id,@RequestParam("car_name")String car_name,
+	@RequestMapping("Comprehensive_Search")
+	public void Comprehensive_Search (@RequestParam("car_id")String car_id,@RequestParam("car_name")String car_name,
 			@RequestParam("car_number")String car_number,@RequestParam("car_driver")String car_drivet,
 			@RequestParam("car_unit")String car_unit,HttpServletResponse response) throws IOException{
 		System.out.println("进入车辆信息多条件查询 查询内容如下");
@@ -54,7 +56,7 @@ public class CarController {
 			System.out.println("条件查询"+select_car);
 		if(select_car==null)
 			System.out.println("条件查询"+select_car);
-		out.print(select_car);
+		out.print("哈哈");
 	}
 	
 	
@@ -149,4 +151,22 @@ public class CarController {
 		//输入车辆编号进行添加
 		
 		
+		//跳转车辆维修信息并且把车辆信息查询出来
+		@RequestMapping("car_repair")
+		public String Car_Repair(Model m) throws IOException {
+			List<com.yuyi.model.Car_Repair> Car_Repair = car.Select_Repair();
+			m.addAttribute("wx", Car_Repair);
+			//车辆维修列表查询驾驶员信息 提取名字放在下拉框中
+			List<jiashiyuan> js = car.Select_Driver();
+			m.addAttribute("js", js);
+			return "/car_repair";
+		}
+		
+		@ResourceMapping("add_repair")
+		public void Add_Repair(@RequestParam("part_name")String part_name,HttpServletResponse response) throws IOException {
+			PrintWriter out = response.getWriter();
+			int add_repair_ok = car.Add_Repair(part_name);
+			System.out.println("进入部件添加controller ----是否添加成功" +add_repair_ok);
+			out.print(add_repair_ok);
+		}
 }

@@ -10,6 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.yuyi.dao.CarDao;
 import com.yuyi.model.Car;
+import com.yuyi.model.Car_Repair;
+import com.yuyi.model.jiashiyuan;
 import com.yuyi.service.CarService;
 
 
@@ -63,7 +65,24 @@ public class CarServiceImpl implements CarService{
 	//条件查询
 	@Override
 	public List<Car> Select_Synthesis_Car(Car car1) {
-		// TODO Auto-generated method stub
 		return  car.Select_Synthesis_Car(car1);
+	}
+	
+	//车辆维修信息查询
+	@Override
+	public List<Car_Repair> Select_Repair() {
+		return car.Select_repair();
+	}
+	
+	//查询驾驶员信息(名字) 放在车辆维修列表中的下拉列表中
+	@Override
+	public List<jiashiyuan> Select_Driver() {
+		return car.Select_Driver();
+	}
+	
+	//车辆维修>>添加部件
+	@Override
+	public int Add_Repair(String part_name) {
+		return car.Add_Repair(part_name);
 	}
 }

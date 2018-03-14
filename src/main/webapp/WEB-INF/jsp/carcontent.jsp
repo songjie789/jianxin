@@ -58,8 +58,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   		</div>
   		
   		
-  		
-  		
   		<!-- 分页 -->
   		<div id= "fenye"style="width:1100px;margin:1px;top:10px;" id="MainForm">
 <br/>

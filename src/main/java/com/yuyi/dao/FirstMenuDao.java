@@ -17,9 +17,11 @@ import com.yuyi.model.FirstMenu;
  * 
  */
 public interface FirstMenuDao {
+	//查询一级菜单
 	@Select("select * from first_menu_table")	
 	List<FirstMenu> selectBy();		
 	
+	//插入一级菜单
 	@Insert("insert into first_menu_table(name,classname) values(#{name},#{classname})")	
 	int insertFirst(@Param("name")String name,@Param("classname")String classname);    
 }

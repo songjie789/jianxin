@@ -6,7 +6,6 @@
  * 条件查询
  * 
  */
-
      //修改一条车辆信息
 		function update(car_id){
    		var carid = car_id.substring(0,10);
@@ -105,7 +104,7 @@
   	  		 var unit_text=$("#search_car_unit option:selected");
   	  		 var units= unit_text.text();  //获取车辆所属单位的text值
   	  		 alert("车辆编号 : "+car_id+"-----车辆名称 : "+car_name+"------车牌号 : "+car_number+"------车辆所属驾驶员 : "+cardrivers+"------车辆所属单位 :  : "+units);
-  	  		 $.post("ComprehensiveSearch",
+  	  		 $.post("Comprehensive_Search",
   	  				 {
   	  			 	car_id:car_id,
   	  			 	car_name:car_name,

@@ -22,7 +22,6 @@ import com.yuyi.model.SecondMenu;
 public interface SecondDao {
 	//查询二级菜单
 	@Select("select * from second_menu_table")
-
 	List<SecondMenu> SelectByid();
 	
 	//新增二级菜单
