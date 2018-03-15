@@ -78,7 +78,6 @@ public class DeptController {
 	//登陆之后转向主页面 向数据库添加 登陆的IP登陆的用户名登陆的时间
 	@RequestMapping("indexa")
 	public String logina() throws Exception {
-			
 			return "/index";
 	}
 	

@@ -11,6 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.yuyi.dao.CarDao;
 import com.yuyi.model.Car;
 import com.yuyi.model.Car_Repair;
+import com.yuyi.model.Part;
+import com.yuyi.model.Unit;
 import com.yuyi.model.jiashiyuan;
 import com.yuyi.service.CarService;
 
@@ -74,15 +76,23 @@ public class CarServiceImpl implements CarService{
 		return car.Select_repair();
 	}
 	
-	//查询驾驶员信息(名字) 放在车辆维修列表中的下拉列表中
-	@Override
-	public List<jiashiyuan> Select_Driver() {
-		return car.Select_Driver();
-	}
-	
 	//车辆维修>>添加部件
 	@Override
 	public int Add_Repair(String part_name) {
 		return car.Add_Repair(part_name);
+	}
+	@Override
+	public List<Part> SlectPartName() {
+		return car.SlectPartName();
+	}
+	@Override
+	public List<jiashiyuan> SelectJs() {
+		return car.SelectJs();
+	}
+	
+	//查询快递公司放在添加车辆信息页面
+	@Override
+	public List<Unit> SelectUnit() {
+		return car.SelectUnit();
 	}
 }

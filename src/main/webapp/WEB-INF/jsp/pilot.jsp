@@ -27,10 +27,10 @@
 <body style="padding-bottom:0px;">
 	<!-- 头部 -->
 	<div class="pageTop">
-				<div class="page">
-					<img src="img/coin02.png" /><span><a href="pilot">首页</a>&nbsp;-&nbsp;<a
-						href="pilot">驾驶员管理</a>&nbsp;-</span>&nbsp;驾驶员信息
-				</div>
+		<div class="page">
+			<img src="img/coin02.png" /><span><a href="pilot">首页</a>&nbsp;-&nbsp;
+			<a href="pilot">驾驶员管理</a>&nbsp;-</span>&nbsp;驾驶员信息
+		</div>
 	</div>		
 	
 	
@@ -86,7 +86,7 @@
   						<select id = "driver_number" name="district" style="width: 205px">
 							<option value="0">请选择车辆</option>
 							<c:forEach var="car_number" items="${car_number_ok}" >
-							<option value=${dcar_number}>${car_number.car_number}</option>
+							<option value=${car_number}>${car_number.car_number}</option>
 							</c:forEach>
 						</select>
   					</td>

@@ -5,6 +5,8 @@ import java.util.List;
 
 import com.yuyi.model.Car;
 import com.yuyi.model.Car_Repair;
+import com.yuyi.model.Part;
+import com.yuyi.model.Unit;
 import com.yuyi.model.jiashiyuan;
 
 public interface CarService {
@@ -30,8 +32,12 @@ public interface CarService {
 	
 	//查询车辆维修信息
 	List<Car_Repair> Select_Repair();
-	//查询驾驶员信息(名字) 放在车辆维修列表中的下拉列表中
-	List<jiashiyuan> Select_Driver();
 	//车辆维修添加部件
 	int Add_Repair(String part_name);
+	//查询部件名称
+	List<Part> SlectPartName();
+	//查询驾驶员信息放在添加车辆信息页面
+	List<jiashiyuan> SelectJs();
+	//查询快递公司放在添加车辆信息页面
+	List<Unit> SelectUnit();
 }

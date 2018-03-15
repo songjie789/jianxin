@@ -13,6 +13,8 @@ import org.apache.ibatis.annotations.Update;
 import com.yuyi.controller.DynamicSQL;
 import com.yuyi.model.Car;
 import com.yuyi.model.Car_Repair;
+import com.yuyi.model.Part;
+import com.yuyi.model.Unit;
 import com.yuyi.model.jiashiyuan;
 
 
@@ -56,11 +58,21 @@ public interface CarDao {
 	@Select("select * from car_repair_table")
 	List<Car_Repair> Select_repair();
 	
-	//查询驾驶员信息(名字) 放在车辆维修列表中的下拉列表中
-	@Select("select driver_name from driver_table")
-	List<jiashiyuan> Select_Driver();
+	
+	//查询部件名称给车辆维修搜索条件
+	@Select("select  * from part_table")
+	List<Part> SlectPartName();
 	
 	//车辆维修>>添加部件
 	@Insert("insert into part_table (part_name) values (#{part_name})")
 	int Add_Repair(@Param("part_name")String part_name);
+	
+	//查询驾驶员信息给添加车辆信息页面
+	@Select("select * from driver_table")
+	List<jiashiyuan> SelectJs();
+	
+	//查询快递公司放在添加车辆信息页面
+	@Select("select * from unit_table")
+	List<Unit> SelectUnit();
+	
 }

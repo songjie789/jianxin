@@ -23,6 +23,9 @@ import org.springframework.web.portlet.bind.annotation.ResourceMapping;
 
 import com.itextpdf.text.log.SysoCounter;
 import com.yuyi.model.Car;
+import com.yuyi.model.Car_Repair;
+import com.yuyi.model.Part;
+import com.yuyi.model.Unit;
 import com.yuyi.model.jiashiyuan;
 import com.yuyi.service.CarService;
 
@@ -57,6 +60,17 @@ public class CarController {
 		if(select_car==null)
 			System.out.println("条件查询"+select_car);
 		out.print("哈哈");
+	}
+	
+	
+	//跳转添加车辆页面
+	@RequestMapping("addcarcontent")
+	public String AddcarContent(Model m){
+		List<jiashiyuan> js = car.SelectJs();
+		List<Unit> car_unit = car.SelectUnit();
+		m.addAttribute("js", js);
+		m.addAttribute("car_unit", car_unit);
+		return "/addcarcontent";
 	}
 	
 	
@@ -156,17 +170,15 @@ public class CarController {
 		public String Car_Repair(Model m) throws IOException {
 			List<com.yuyi.model.Car_Repair> Car_Repair = car.Select_Repair();
 			m.addAttribute("wx", Car_Repair);
-			//车辆维修列表查询驾驶员信息 提取名字放在下拉框中
-			List<jiashiyuan> js = car.Select_Driver();
-			m.addAttribute("js", js);
-			return "/car_repair";
+			//查询车辆部件
+			List<Part> bj = car.SlectPartName();
+			m.addAttribute("bj", bj);
+		return "/carrepair";
 		}
 		
-		@ResourceMapping("add_repair")
-		public void Add_Repair(@RequestParam("part_name")String part_name,HttpServletResponse response) throws IOException {
-			PrintWriter out = response.getWriter();
-			int add_repair_ok = car.Add_Repair(part_name);
-			System.out.println("进入部件添加controller ----是否添加成功" +add_repair_ok);
-			out.print(add_repair_ok);
+		//添加部件
+		@ResourceMapping("addpart")
+		public String AddPart(){
+			return "/addpart";
 		}
 }
