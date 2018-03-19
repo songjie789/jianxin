@@ -177,8 +177,13 @@ public class CarController {
 		}
 		
 		//添加部件
-		@ResourceMapping("addpart")
+		@RequestMapping("addpart")
 		public String AddPart(){
 			return "/addpart";
+		}
+		//添加部件ajax
+		@RequestMapping("addadd")
+		public void addadd(@RequestParam("part_name")String part_name,HttpServletResponse response) {
+			
 		}
 }

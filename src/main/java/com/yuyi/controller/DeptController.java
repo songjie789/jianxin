@@ -16,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.ecanal_mail.tools.GetServletIp;
 import com.yuyi.model.Batch;
 import com.yuyi.model.User;
 import com.yuyi.service.AdminLoginService;
@@ -50,17 +51,17 @@ public class DeptController {
 	}
 	@RequestMapping("index")
 	public String index(@RequestParam("username")String username,@RequestParam("password")String password,
-			HttpSession session) throws UnknownHostException {
+			HttpSession session,HttpServletRequest request) throws Exception {
 		String md5password = md5.MD5(password);
 		User a=user.selectBylogin(username, md5password);
+		String ipp = GetServletIp.getIpAddr(request);
 		System.out.println("登陆账号："+a);
 		if(a!=null) {	
 			System.out.println(username);
 			session.setAttribute("admin", username);   //存放登陆标记
-			getIP getIP = new getIP();
 			GetTime getTime = new GetTime();
 			String time = getTime.time();
-			String ip = getIP.IP();
+			String ip = GetServletIp.getIpAddr(request);
 			String admin = (String) session.getAttribute("admin");
 			als.InsertLoginAdmin(ip, admin, time);
 			return "redirect:indexa";

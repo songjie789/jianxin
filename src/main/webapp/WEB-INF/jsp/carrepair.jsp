@@ -31,6 +31,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<script type="text/javascript" src="js/index.js" ></script>
 	<script type="text/javascript" src="jsp_js/pilot_js.js"></script>
 	<script type="text/javascript" src="jsp_js/carcontent_js.js"></script>
+	<script type="text/javascript" src="jsp_js/carrepair_js.js"></script>
+	
   </head>
   	<body style="padding-bottom:3px;">
 	<!-- 头部导航标签 -->
@@ -53,7 +55,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		</select>&nbsp;&nbsp;
 		
 		<button class="button white"  id="search">搜索</button>
-		<button class="button white" id = "add">新增部件</button>
+		<a href="addpart">
+		<button class="button white">新增部件</button></a>
 	</div>
 	
 	<!-- 分页 -->

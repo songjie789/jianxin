@@ -10,11 +10,13 @@ function search(){
 		 alert(cardrivers+car_number);
 }
 
-
 //添加部件
-function addadd(){
+function addcar(){
 	var part_names = $("#part_name").val();
-	alert(part_names);
+	if(part_names == null || part_names==""){
+		alert("请填写部件名称！");
+		return false;
+	}
 	$.post("addadd",
 			{
 		part_name:part_names
@@ -25,9 +27,7 @@ function addadd(){
 					window.location.href=window.location.href;   // 刷新当前页面
 				}else{
 					alert("修改失败");
-				}
-				
-			});
-	
+				}			
+			});	
 }
 
