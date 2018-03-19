@@ -40,4 +40,6 @@ public interface CarService {
 	List<jiashiyuan> SelectJs();
 	//查询快递公司放在添加车辆信息页面
 	List<Unit> SelectUnit();
+	//添加部件
+	int InsertPart(String part_name);
 }

@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.portlet.bind.annotation.ResourceMapping;
 
+import com.ecanal_mail.tools.ErrorInfoFromException;
 import com.itextpdf.text.log.SysoCounter;
 import com.yuyi.model.Car;
 import com.yuyi.model.Car_Repair;
@@ -28,6 +29,7 @@ import com.yuyi.model.Part;
 import com.yuyi.model.Unit;
 import com.yuyi.model.jiashiyuan;
 import com.yuyi.service.CarService;
+import com.yuyi.service.ErrorService;
 
 import net.sf.json.JSON;
 import net.sf.json.JSONArray;
@@ -38,28 +40,43 @@ public class CarController {
 	@Qualifier("car")
 	private CarService car;
 	
+	//獲取ErrorServiceImpl
+	@Autowired
+	@Qualifier("ErrorService")
+	private ErrorService erreoService;
+	
+	//加载ERROR异常信息转换成String字符串的工具類 存放在数据库中
+	ErrorInfoFromException error = new ErrorInfoFromException();
 	
 	//车辆条件查询
 	@RequestMapping("Comprehensive_Search")
 	public void Comprehensive_Search (@RequestParam("car_id")String car_id,@RequestParam("car_name")String car_name,
 			@RequestParam("car_number")String car_number,@RequestParam("car_driver")String car_drivet,
-			@RequestParam("car_unit")String car_unit,HttpServletResponse response) throws IOException{
-		System.out.println("进入车辆信息多条件查询 查询内容如下");
-		System.out.println("车辆编号:"+car_id+"-----车辆名称 : "+car_name+"-----车牌号 : "+car_number+"-----车辆所属驾驶员 : "+car_drivet+"车辆所属单位 : "+car_unit);
-		PrintWriter out= response.getWriter();
-		Car car1 = new Car();
-		car1.setCar_id(car_id);
-		car1.setCar_name(car_name);
-		car1.setCar_number(car_number);
-		car1.setCar_driver(car_drivet);
-		car1.setCar_unit(car_unit);
-		
-		List<Car> select_car = car.Select_Synthesis_Car(car1);
-		if(select_car!=null) 
-			System.out.println("条件查询"+select_car);
-		if(select_car==null)
-			System.out.println("条件查询"+select_car);
-		out.print("哈哈");
+			@RequestParam("car_unit")String car_unit,HttpServletResponse response) {
+			String error_message = null;
+		try {
+			System.out.println("进入车辆信息多条件查询 查询内容如下");
+			System.out.println("车辆编号:"+car_id+"-----车辆名称 : "+car_name+"-----车牌号 : "+car_number+"-----车辆所属驾驶员 : "+car_drivet+"车辆所属单位 : "+car_unit);
+			PrintWriter out= response.getWriter();
+			Car car1 = new Car();
+			car1.setCar_id(car_id);
+			car1.setCar_name(car_name);
+			car1.setCar_number(car_number);
+			car1.setCar_driver(car_drivet);
+			car1.setCar_unit(car_unit);
+			
+			List<Car> select_car = car.Select_Synthesis_Car(car1);
+			if(select_car!=null) 
+				System.out.println("条件查询"+select_car);
+			if(select_car==null)
+				System.out.println("条件查询"+select_car);
+			out.print("哈哈");
+			
+		} catch (Exception e) {
+			error_message = error.getErrorInfoFromException(e);
+			erreoService.InsertError(error_message);
+			
+		}
 	}
 	
 	
@@ -103,12 +120,17 @@ public class CarController {
 		public void addcar(@RequestParam("carname")String carname,
 				@RequestParam("carlength")String carlength,@RequestParam("carvin")String carvin,
 				@RequestParam("carnumber")String carnumber,@RequestParam("cardrivers") String cardrivers,@RequestParam("unit")String unit,
-			HttpSession session,HttpServletResponse response) throws IOException{
-			System.out.println("进入caradd的controller类");
-			PrintWriter out = response.getWriter();
-			int a  = car.insertcar(carname,carlength,carvin,carnumber,cardrivers,unit);
-			System.out.println("添加车辆是否成功 :"+a);
-			out.print(a);
+			HttpSession session,HttpServletResponse response) {
+			String error_message = null;
+			try {
+				System.out.println("进入caradd的controller类");
+				PrintWriter out = response.getWriter();
+				int a  = car.insertcar(carname,carlength,carvin,carnumber,cardrivers,unit);
+				System.out.println("添加车辆是否成功 :"+a);
+				out.print(a);
+			} catch (Exception e) {
+				erreoService.InsertError(error.getErrorInfoFromException(e));
+			}
 		}
 		
 		
@@ -184,6 +206,12 @@ public class CarController {
 		//添加部件ajax
 		@RequestMapping("addadd")
 		public void addadd(@RequestParam("part_name")String part_name,HttpServletResponse response) {
-			
+			try {
+				PrintWriter out = response.getWriter();
+				int ok = car.InsertPart(part_name);
+				out.print(ok);
+			} catch (Exception e) { //如果有异常就把异常信息插入到异常表中
+				erreoService.InsertError(error.getErrorInfoFromException(e));
+			}
 		}
 }

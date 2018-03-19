@@ -3,6 +3,7 @@ package com.yuyi.controller;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -17,8 +18,6 @@ import com.yuyi.service.AdminLoginService;
 import com.yuyi.service.CarService;
 import com.yuyi.service.FirstMenuService;
 import com.yuyi.service.SecondService;
-import com.yuyi.util.GetTime;
-import com.yuyi.util.getIP;
 
 /**
  * <P>Title: FrameController</p>

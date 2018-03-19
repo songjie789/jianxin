@@ -1,3 +1,8 @@
+//点击新增部件按钮跳转新增不见页面
+function add_bujian(){
+	window.location.href="addpart"
+}
+
 
 //车辆维修 条件查询
 function search(){
@@ -23,11 +28,17 @@ function addcar(){
 				},
 			function(data){
 				if(data>0){
-					alert("修改成功");
+					alert("添加成功");
 					window.location.href=window.location.href;   // 刷新当前页面
 				}else{
-					alert("修改失败");
+					alert("添加失败");
 				}			
 			});	
 }
+
+
+//新增部件页面点击取消跳转车辆维修页面
+ function quxiao(){
+	 window.location.href="car_repair";
+ }
 

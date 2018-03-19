@@ -9,6 +9,7 @@ import org.apache.ibatis.annotations.ResultMap;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.SelectProvider;
 import org.apache.ibatis.annotations.Update;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.yuyi.controller.DynamicSQL;
 import com.yuyi.model.Car;
@@ -74,5 +75,10 @@ public interface CarDao {
 	//查询快递公司放在添加车辆信息页面
 	@Select("select * from unit_table")
 	List<Unit> SelectUnit();
+	
+	
+	//添加部件
+	@Insert("insert into part_table (part_name) values (#{part_name})")
+	int InsertPart(@RequestParam("part_name")String part_name);
 	
 }

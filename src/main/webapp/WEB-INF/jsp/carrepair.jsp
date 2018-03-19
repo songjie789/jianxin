@@ -56,7 +56,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		
 		<button class="button white"  id="search">搜索</button>
 		<a href="addpart">
-		<button class="button white">新增部件</button></a>
+		<button class="button white" onclick="add_bujian()">新增部件</button></a>
 	</div>
 	
 	<!-- 分页 -->

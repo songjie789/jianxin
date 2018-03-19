@@ -95,4 +95,10 @@ public class CarServiceImpl implements CarService{
 	public List<Unit> SelectUnit() {
 		return car.SelectUnit();
 	}
+	
+	//添加部件
+	@Override
+	public int InsertPart(String part_name) {
+		return car.InsertPart(part_name);
+	}
 }

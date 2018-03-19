@@ -2,7 +2,6 @@ package com.yuyi.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.net.UnknownHostException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,7 +22,6 @@ import com.yuyi.service.AdminLoginService;
 import com.yuyi.service.UserService;
 import com.yuyi.util.GetTime;
 import com.yuyi.util.MD5;
-import com.yuyi.util.getIP;
 
 
 @Controller
