@@ -3,8 +3,11 @@ package com.yuyi.controller;
 import org.apache.ibatis.jdbc.SQL;
 
 import com.yuyi.model.Car;
-
 public class DynamicSQL {
+	/**
+	 * @param car
+	 * @return String
+	 */
 	public String Select_Synthesis_Car(Car car) {
 		return new SQL() {
 			{

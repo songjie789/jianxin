@@ -24,6 +24,9 @@ public class CarServiceImpl implements CarService{
 	private CarDao car;
 	
 	//添加车辆之前查询车牌号是否存在
+	/* (non-Javadoc)
+	 * @see com.yuyi.service.CarService#electcarNumber(java.lang.String)
+	 */
 	@Override
 	public String electcarNumber(String car_number) {
 		return car.SelectCar_Number(car_number);
@@ -34,6 +37,9 @@ public class CarServiceImpl implements CarService{
 		return car.selectvin(vins);
 	}
 	//插入车辆信息
+	/* (non-Javadoc)
+	 * @see com.yuyi.service.CarService#insertcar(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)
+	 */
 	@Override
 	public int insertcar(String carname, String carlength, String carvin,String carnumber, String cardrivers, String unit) {
 		return car.insertcat(carname,carlength,carvin,carnumber,cardrivers,unit);

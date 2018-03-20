@@ -12,14 +12,8 @@ import com.yuyi.dao.AdminLogin;
 import com.yuyi.model.loginAdmin;
 import com.yuyi.service.AdminLoginService;
 
-/**
- * <P>Title: AdminLoginServiceimpl</p>
- * <p>Description:</p>
- * <p>Company:山东宇易信息科技股份有限公司</p>
- * @author lcc
- * @data :2018年2月28日下午2:13:54
- * 
- */
+
+
 @Transactional(propagation=Propagation.REQUIRED,isolation=Isolation.DEFAULT)
 @Service("admin_logina")
 public class AdminLoginServiceimpl implements AdminLoginService {
@@ -27,13 +21,17 @@ public class AdminLoginServiceimpl implements AdminLoginService {
 	@Autowired
 	private AdminLogin al;
 	
+	/* (non-Javadoc)
+	 * @see com.yuyi.service.AdminLoginService#SelectLoginAdmin()
+	 */
 	public List<loginAdmin> SelectLoginAdmin() {
-		// TODO Auto-generated method stub
 		return al.SelectLoginAdmin();
 	}
 
+	/* (non-Javadoc)
+	 * @see com.yuyi.service.AdminLoginService#InsertLoginAdmin(java.lang.String, java.lang.String, java.lang.String)
+	 */
 	public int InsertLoginAdmin(String ip, String name, String time) {
-		// TODO Auto-generated method stub
 		System.out.println("service"+ip+name+time);
 		return al.InsertLoginAdmin(ip, name, time);
 	}

@@ -27,11 +27,17 @@ public class SecondServiceimpl implements SecondService {
 	@Autowired
 	private SecondDao second;
 
+	/* (non-Javadoc)
+	 * @see com.yuyi.service.SecondService#SelectByid()
+	 */
 	public List<SecondMenu> SelectByid() {
 		// TODO Auto-generated method stub
 		return second.SelectByid();
 	}
 
+	/* (non-Javadoc)
+	 * @see com.yuyi.service.SecondService#InsertFirset(java.lang.Integer, java.lang.String, java.lang.String)
+	 */
 	public int InsertFirset(Integer id, String name, String address) {
 		// TODO Auto-generated method stub
 		return second.InsertFirset(id, name, address);

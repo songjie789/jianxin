@@ -13,7 +13,16 @@ import com.yuyi.model.loginAdmin;
  * 
  */
 public interface AdminLoginService {
+	/**
+	 * @return List<loginAdmin>
+	 */
 	List<loginAdmin> SelectLoginAdmin();
 	
+	/**
+	 * @param ip
+	 * @param name
+	 * @param time
+	 * @return int
+	 */
 	int InsertLoginAdmin(String ip,String name,String time);
 }

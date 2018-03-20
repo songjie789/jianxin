@@ -46,6 +46,10 @@ public class FrameController {
 	@Qualifier("car")
 	private CarService car;
 	//主体
+	/**
+	 * @param m
+	 * @return
+	 */
 	@RequestMapping("main")
 	public String main(Model m ) {
 		List<loginAdmin> arg = als.SelectLoginAdmin();
@@ -57,6 +61,11 @@ public class FrameController {
 	}
 
 	//上层
+	/**
+	 * @param session
+	 * @param m
+	 * @return
+	 */
 	@RequestMapping("head")
 	public String head(HttpSession session,Model m) {
 		
@@ -67,6 +76,10 @@ public class FrameController {
 		
 	}
 	//左侧
+	/**
+	 * @param m
+	 * @return
+	 */
 	@RequestMapping("left")
 	public String left(Model m) {
 		List<FirstMenu> one=first.selectBy();
@@ -77,6 +90,9 @@ public class FrameController {
 		
 	}
 	//跳进一级管理
+	/**
+	 * @return String
+	 */
 	@RequestMapping("onemenu")
 	public String Onemenu() {
 		return "/onemenu";

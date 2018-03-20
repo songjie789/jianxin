@@ -28,15 +28,24 @@ public class UserServiceimpl implements UserService {
 	@Autowired
 	private UserDao user;
 	
+	/* (non-Javadoc)
+	 * @see com.yuyi.service.UserService#selectBylogin(java.lang.String, java.lang.String)
+	 */
 	public User selectBylogin(String name, String password) {
 		return user.selectBylogin(name, password);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.yuyi.service.UserService#SelectByBatch()
+	 */
 	public List<Batch> SelectByBatch() {
 		return user.SelectByBatch();
 	}
 
 	//注册账户
+	/* (non-Javadoc)
+	 * @see com.yuyi.service.UserService#insertid(java.lang.String, java.lang.String, java.lang.String, java.lang.String)
+	 */
 	public int insertid(String username, String password, String phone, String name) {
 		return user.insertid(username, password, phone, name);
 	}
@@ -45,12 +54,18 @@ public class UserServiceimpl implements UserService {
 		return user.selectUpdae(username, password, phone);
 	}
 	//修改密码>>查询出来之后进行修改
+	/* (non-Javadoc)
+	 * @see com.yuyi.service.UserService#xiugaiUser(java.lang.String, java.lang.String)
+	 */
 	public int xiugaiUser(String username, String password) {
 		return user.xiugaiUser(username,password);
 	}
 	
 	
 	//查询用户是否存在,再进行注册
+	/* (non-Javadoc)
+	 * @see com.yuyi.service.UserService#selectUser(java.lang.String, java.lang.String)
+	 */
 	@Override
 	public String selectUser(String username, String phone) {
 		return user.selectUser(username,phone);

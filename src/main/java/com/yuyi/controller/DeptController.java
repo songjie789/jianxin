@@ -24,6 +24,10 @@ import com.yuyi.util.GetTime;
 import com.yuyi.util.MD5;
 
 
+/**
+ * @author SongJie
+ *	
+ */
 @Controller
 public class DeptController {
 	@Autowired
@@ -47,6 +51,14 @@ public class DeptController {
 		return "/registration";
 		
 	}
+	/**
+	 * @param username
+	 * @param password
+	 * @param session
+	 * @param request
+	 * @return String
+	 * @throws Exception
+	 */
 	@RequestMapping("index")
 	public String index(@RequestParam("username")String username,@RequestParam("password")String password,
 			HttpSession session,HttpServletRequest request) throws Exception {
@@ -67,20 +79,34 @@ public class DeptController {
 		else {
 			return "/login";
 		}
-		
-		
 	}
 	
-	//获取MD5加密工具类
+	
+	/**
+	 * 获取MD5加密工具类
+	 */
 	MD5 md5 = new MD5();
 
 	//登陆之后转向主页面 向数据库添加 登陆的IP登陆的用户名登陆的时间
+	/**
+	 * @return String
+	 * @throws Exception
+	 */
 	@RequestMapping("indexa")
 	public String logina() throws Exception {
 			return "/index";
 	}
 	
 	//修改密码
+	/**
+	 * @param username
+	 * @param password
+	 * @param phone
+	 * @param aa
+	 * @param session
+	 * @param response
+	 * @throws Exception
+	 */
 	@RequestMapping("registrationAdmin")
 	public void registrationAdmin(@RequestParam("username")String username,@RequestParam("password")String password,
 			@RequestParam("phone")String phone,Model aa,HttpSession session,
@@ -106,6 +132,10 @@ public class DeptController {
 	}
 	
 	
+	/**
+	 * @param request
+	 * @param response
+	 */
 	@RequestMapping("/del")  
 	public void batchDeletes(HttpServletRequest request, HttpServletResponse response) {  
 	    String items = request.getParameter("delitems");
@@ -123,6 +153,15 @@ public class DeptController {
 	
 	
 	//先查询用户是否存在,不存在再注册用户
+	/**
+	 * @param username
+	 * @param password
+	 * @param phone
+	 * @param name
+	 * @param session
+	 * @param response
+	 * @throws IOException
+	 */
 	@RequestMapping("AddUsers")
 	public void AddUsers(@RequestParam("username")String username,@RequestParam("password")String password,
 			@RequestParam("phone")String phone,@RequestParam("name")String name,

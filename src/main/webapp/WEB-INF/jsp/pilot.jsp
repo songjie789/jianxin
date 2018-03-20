@@ -67,43 +67,5 @@
 </div>
 <div style="text-align:center;">
 </div>
-
-
-<!-- 添加驾驶员信息 默认隐藏,点击添加按钮才显示 -->
-  		<br/><br/><br/><br/><br/>
-  		<!-- 添加车辆信息 -->
-  		<div>
-  			<center>
-  			<table cellspacing="20px">
-  				<tr>
-  					<td>驾驶员姓名:</td>
-  					<td><input id="driver_name"style="height: 30px;width: 200px"/></td>
-  				</tr>
-  				
-  				<tr>
-  					<td>驾驶员所属车辆:</td>
- 					<td>
-  						<select id = "driver_number" name="district" style="width: 205px">
-							<option value="0">请选择车辆</option>
-							<c:forEach var="car_number" items="${car_number_ok}" >
-							<option value=${car_number}>${car_number.car_number}</option>
-							</c:forEach>
-						</select>
-  					</td>
-  				</tr>
-  				
-  				<tr>
-  					<td>住址:</td>
-  					<td><input id="driver_address"style="height: 30px;width: 200px" maxlength="17"/></td>
-  				</tr>
-  				<tr>
-  					<td>联系方式:</td>
-  					<td><input id="driver_phone"style="height: 30px;width: 200px"/></td>
-  				</tr>
-  			</table>
-  			<button class="button white"   onclick="add_driver()">添加</button>
-  			<button class="button white">取消</button>
-  			</center>
-  		</div>
 </body>
 </html>

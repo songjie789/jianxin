@@ -29,12 +29,18 @@ public class JiaShiYuanServiceimpl implements JiaShiYuanService {
 	@Autowired
 	private JiaShiYuanDao jsy;
 	
+	/* (non-Javadoc)
+	 * @see com.yuyi.service.JiaShiYuanService#InsertJiaShiYuan()
+	 */
 	@Override
 	public int InsertJiaShiYuan() {
 		// TODO Auto-generated method stub
 		return jsy.InsertJiaShiYuan();
 	}
 
+	/* (non-Javadoc)
+	 * @see com.yuyi.service.JiaShiYuanService#SeleceJiaShiYuan()
+	 */
 	@Override
 	public List<jiashiyuan> SeleceJiaShiYuan() {
 		// TODO Auto-generated method stub

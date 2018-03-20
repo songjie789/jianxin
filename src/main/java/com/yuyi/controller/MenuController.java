@@ -33,6 +33,11 @@ public class MenuController {
 	private SecondService second;
 	
 	//增加一级菜单
+	/**
+	 * @param name
+	 * @param response
+	 * @throws IOException
+	 */
 	@RequestMapping("addonefirst")
 	public void AddOneFirst(@RequestParam("name")String name,
 				HttpServletResponse response) throws IOException {
@@ -49,6 +54,13 @@ public class MenuController {
 	}
 	
 	//增加二级菜单
+	/**
+	 * @param name
+	 * @param address
+	 * @param id
+	 * @param response
+	 * @throws IOException
+	 */
 	@RequestMapping("addtwomenu")
 	public void AddTwoMenu(@RequestParam("name")String name,
 			@RequestParam("address")String address,@RequestParam("id")int id,

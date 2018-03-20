@@ -5,6 +5,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class GetTime {
+	/**
+	 * @return String
+	 */
 	public String time (){
         Date dt=new Date();//获取日期类
        DateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");//设置显示格式

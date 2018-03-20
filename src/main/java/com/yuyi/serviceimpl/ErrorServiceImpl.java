@@ -16,7 +16,10 @@ import com.yuyi.service.ErrorService;
 public class ErrorServiceImpl implements ErrorService {
 	@Autowired
 	private ErrorDao error;
-	//插入錯誤信息
+	//插入错误信息
+	/* (non-Javadoc)
+	 * @see com.yuyi.service.ErrorService#InsertError(java.lang.String)
+	 */
 	@Override
 	public int  InsertError(String error_message) {
 		return error.InsertError(error_message);
@@ -25,6 +28,9 @@ public class ErrorServiceImpl implements ErrorService {
 	
 	
 	//查询已存在的异常信息
+	/* (non-Javadoc)
+	 * @see com.yuyi.service.ErrorService#SelectError()
+	 */
 	@Override
 	public List<Error> SelectError() {
 		return error.SelectError();

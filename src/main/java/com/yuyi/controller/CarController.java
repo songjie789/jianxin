@@ -1,37 +1,28 @@
 package com.yuyi.controller;
-
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.ibatis.jdbc.SQL;
-import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.portlet.bind.annotation.ResourceMapping;
 
 import com.ecanal_mail.tools.ErrorInfoFromException;
-import com.itextpdf.text.log.SysoCounter;
 import com.yuyi.model.Car;
-import com.yuyi.model.Car_Repair;
 import com.yuyi.model.Part;
 import com.yuyi.model.Unit;
 import com.yuyi.model.jiashiyuan;
 import com.yuyi.service.CarService;
 import com.yuyi.service.ErrorService;
+import com.yuyi.service.JiaShiYuanService;
 
-import net.sf.json.JSON;
 import net.sf.json.JSONArray;
 
 @Controller
@@ -40,15 +31,31 @@ public class CarController {
 	@Qualifier("car")
 	private CarService car;
 	
-	//獲取ErrorServiceImpl
+	//获取ErrorServiceImpl
 	@Autowired
 	@Qualifier("ErrorService")
 	private ErrorService erreoService;
 	
-	//加载ERROR异常信息转换成String字符串的工具類 存放在数据库中
+	//获取驾驶员service
+	@Autowired
+	@Qualifier("admin_jiashiyuan")
+	private JiaShiYuanService driver;
+	
+	
+	/**
+	 * 加载ERROR异常信息转换成String字符串的工具類 存放在数据库中
+	 */
 	ErrorInfoFromException error = new ErrorInfoFromException();
 	
 	//车辆条件查询
+	/**
+	 * @param car_id 
+	 * @param car_name
+	 * @param car_number
+	 * @param car_drivet
+	 * @param car_unit
+	 * @param response
+	 */
 	@RequestMapping("Comprehensive_Search")
 	public void Comprehensive_Search (@RequestParam("car_id")String car_id,@RequestParam("car_name")String car_name,
 			@RequestParam("car_number")String car_number,@RequestParam("car_driver")String car_drivet,
@@ -64,7 +71,6 @@ public class CarController {
 			car1.setCar_number(car_number);
 			car1.setCar_driver(car_drivet);
 			car1.setCar_unit(car_unit);
-			
 			List<Car> select_car = car.Select_Synthesis_Car(car1);
 			if(select_car!=null) 
 				System.out.println("条件查询"+select_car);
@@ -79,7 +85,11 @@ public class CarController {
 		}
 	}
 	
-	
+	/**
+	 * 
+	 * @param m
+	 * @return String
+	 */
 	//跳转添加车辆页面
 	@RequestMapping("addcarcontent")
 	public String AddcarContent(Model m){
@@ -90,7 +100,12 @@ public class CarController {
 		return "/addcarcontent";
 	}
 	
-	
+	/**
+	 * 
+	 * @param car_number
+	 * @param response
+	 * @throws IOException
+	 */
 	//添加车辆先先查询车牌号是否存在
 		@RequestMapping("select_carnumber")
 		public void select_carnumber (@RequestParam("car_number")String car_number,HttpServletResponse response) throws IOException{
@@ -104,6 +119,11 @@ public class CarController {
 		}
 	
 	//添加车辆先先查询VIN是否存在
+	/**
+	 * @param vins
+	 * @param response
+	 * @throws Exception
+	 */
 	@RequestMapping("select_vin")
 	public void select_vin(@RequestParam("vins")String vins,HttpServletResponse response) throws Exception{
 		PrintWriter out = response.getWriter();
@@ -116,6 +136,16 @@ public class CarController {
 		out.print(ok);
 	}
 	//添加车辆信息
+		/**
+		 * @param carname
+		 * @param carlength
+		 * @param carvin
+		 * @param carnumber
+		 * @param cardrivers
+		 * @param unit
+		 * @param session
+		 * @param response
+		 */
 		@RequestMapping("addcar")
 		public void addcar(@RequestParam("carname")String carname,
 				@RequestParam("carlength")String carlength,@RequestParam("carvin")String carvin,
@@ -136,6 +166,11 @@ public class CarController {
 		
 		
 		//删除车辆信息
+		/**
+		 * @param car_id
+		 * @param response
+		 * @throws IOException
+		 */
 		@RequestMapping("car_delectxinxi")
 		public void car_delect (@RequestParam("car_iddel") String car_id,HttpServletResponse response) throws IOException{
 			int delect_ok = car.CarDelect(car_id);
@@ -145,6 +180,13 @@ public class CarController {
 		}
 		
 		
+		/**
+		 * @param m
+		 * @param car_id
+		 * @param response
+		 * @param session
+		 * @throws IOException
+		 */
 		//先查询修改的车辆信息,把车辆信息带到修改页面
 		@RequestMapping("select_car")
 		public void select_car(Model m,@RequestParam("car_id")String car_id,HttpServletResponse response,HttpSession session) throws IOException{
@@ -160,6 +202,14 @@ public class CarController {
 			out.print(json);
 		}
 		
+		/**
+		 * @param car_vins
+		 * @param car_numbers
+		 * @param car_units
+		 * @param car_drivers
+		 * @param response
+		 * @throws Exception
+		 */
 		//车辆信息修改点击提交
 		@RequestMapping("modify")
 		public void car_modify(@RequestParam("car_vins")String car_vins,@RequestParam("car_numbers")String car_numbers,
@@ -179,6 +229,9 @@ public class CarController {
  * 2018.3.9
  * */
 		//进入车辆维修页面
+		/**
+		 * @return String
+		 */
 		@RequestMapping("user")
 		public String Autorepair(){
 			return "/user";
@@ -188,6 +241,11 @@ public class CarController {
 		
 		
 		//跳转车辆维修信息并且把车辆信息查询出来
+		/**
+		 * @param m
+		 * @return String
+		 * @throws IOException
+		 */
 		@RequestMapping("car_repair")
 		public String Car_Repair(Model m) throws IOException {
 			List<com.yuyi.model.Car_Repair> Car_Repair = car.Select_Repair();
@@ -204,6 +262,10 @@ public class CarController {
 			return "/addpart";
 		}
 		//添加部件ajax
+		/**
+		 * @param part_name
+		 * @param response
+		 */
 		@RequestMapping("addadd")
 		public void addadd(@RequestParam("part_name")String part_name,HttpServletResponse response) {
 			try {
@@ -214,4 +276,19 @@ public class CarController {
 				erreoService.InsertError(error.getErrorInfoFromException(e));
 			}
 		}
+		
+		
+		//添加驾驶员信息页面
+		/**
+		 * @param m
+		 * @return
+		 */
+		@RequestMapping("adddriver")
+		public String AddDriver(Model m) {
+			//查询车牌号
+			List<Car> js = driver.Select_Car_Number();
+			m.addAttribute("js", js);
+			return "/adddriver";
+		}
+		
 }

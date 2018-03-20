@@ -34,6 +34,10 @@ public class JSYController {
 	
 	
 	//驾驶员信息展示页面并把车牌号传到前端页面的下拉列表中
+	/**
+	 * @param m
+	 * @return String
+	 */
 	@RequestMapping("pilot")
 	public String pilot(Model m) {
 		List<jiashiyuan> js=jsy.SeleceJiaShiYuan();
@@ -45,8 +49,16 @@ public class JSYController {
 	}
 	
 	//添加驾驶员信息
-	@RequestMapping("add_driver")
-	public void add_driver(@RequestParam("driver_names")String driver_name,@RequestParam("driver_car_numbers")String driver_car_number,
+	/**
+	 * @param driver_name
+	 * @param driver_car_number
+	 * @param driver_address
+	 * @param driver_phone
+	 * @param response
+	 * @throws IOException
+	 */
+	@RequestMapping("add_driver_kjsd9jiot53")
+	public void AddDrivers(@RequestParam("driver_names")String driver_name,@RequestParam("driver_car_numbers")String driver_car_number,
 			@RequestParam("driver_addresss")String driver_address,@RequestParam("driver_phones")String driver_phone,
 			HttpServletResponse response) throws IOException{
 			System.out.println("驾驶员姓名 : "+driver_name+"------车牌号 : "+driver_car_number+"-----------住址 : "+driver_address+"-------------电话 : "+driver_phone);

@@ -27,13 +27,17 @@ public class FirstMenuServiceimpl implements FirstMenuService {
 	@Autowired
 	private FirstMenuDao first;
 
+	/* (non-Javadoc)
+	 * @see com.yuyi.service.FirstMenuService#selectBy()
+	 */
 	public List<FirstMenu> selectBy() {
-		// TODO Auto-generated method stub
 		return first.selectBy();
 	}
 
+	/* (non-Javadoc)
+	 * @see com.yuyi.service.FirstMenuService#insertFirst(java.lang.String, java.lang.String)
+	 */
 	public int insertFirst(String name, String classname) {
-		// TODO Auto-generated method stub
 		return first.insertFirst(name, classname);
 	}
 	
