@@ -47,6 +47,8 @@ public class CarController {
 	 */
 	ErrorInfoFromException error = new ErrorInfoFromException();
 	
+	
+	
 	//车辆条件查询
 	/**
 	 * @param car_id 
@@ -55,6 +57,7 @@ public class CarController {
 	 * @param car_drivet
 	 * @param car_unit
 	 * @param response
+	 * 
 	 */
 	@RequestMapping("Comprehensive_Search")
 	public void Comprehensive_Search (@RequestParam("car_id")String car_id,@RequestParam("car_name")String car_name,
