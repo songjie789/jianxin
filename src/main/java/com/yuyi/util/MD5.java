@@ -1,6 +1,8 @@
 package com.yuyi.util;
 import java.security.MessageDigest;
 
+import org.springframework.stereotype.Component;
+
 /** 
  * MD5加密工具类 
  *  
@@ -8,6 +10,8 @@ import java.security.MessageDigest;
  * @see  [MD5加密] 
  * 
  */  
+
+@Component("MD5")
 public  class MD5  
 {  
     public final static String MD5(String pwd) {  

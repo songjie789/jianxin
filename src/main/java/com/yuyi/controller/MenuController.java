@@ -11,6 +11,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.ecanal_mail.tools.ErrorUtil;
+import com.yuyi.service.ErrorService;
 import com.yuyi.service.FirstMenuService;
 import com.yuyi.service.SecondService;
 
@@ -32,6 +34,15 @@ public class MenuController {
 	@Qualifier("admin_second")
 	private SecondService second;
 	
+	
+	   //引入捕获异常转换字符串的util
+		ErrorUtil errorUtil = new ErrorUtil();
+		//获取存储异常的service层
+		@Autowired
+		@Qualifier("ErrorService")
+		private ErrorService errorService;
+		
+		
 	//增加一级菜单
 	/**
 	 * @param name
@@ -40,17 +51,21 @@ public class MenuController {
 	 */
 	@RequestMapping("addonefirst")
 	public void AddOneFirst(@RequestParam("name")String name,
-				HttpServletResponse response) throws IOException {
-		int ok = -1;
-		int number = -1;
-		number = first.insertFirst(name, "img/coin10.png");
-		if(number>0){
-			ok=1;
-		}else{
-			ok=0;
+				HttpServletResponse response)  {
+		try {
+		    int ok = -1;
+			int number = -1;
+			number = first.insertFirst(name, "img/coin10.png");
+			if(number>0){
+				ok=1;
+			}else{
+				ok=0;
+			}
+			PrintWriter out = response.getWriter();
+			out.print(ok);
+		} catch (Exception e) {
+		  errorService.InsertError(errorUtil.getError(e));
 		}
-		PrintWriter out = response.getWriter();
-		out.print(ok);
 	}
 	
 	//增加二级菜单
@@ -64,17 +79,20 @@ public class MenuController {
 	@RequestMapping("addtwomenu")
 	public void AddTwoMenu(@RequestParam("name")String name,
 			@RequestParam("address")String address,@RequestParam("id")int id,
-			HttpServletResponse response) throws IOException {
-		int ok = -1;
-		int number = -1;
-		number = second.InsertFirset(id, name, address);
-		if(number>0){
-			ok=1;
-		}else{
-			ok=0;
+			HttpServletResponse response) {
+		try {
+		    int ok = -1;
+			int number = -1;
+			number = second.InsertFirset(id, name, address);
+			if(number>0){
+				ok=1;
+			}else{
+				ok=0;
+			}
+			PrintWriter out = response.getWriter();
+			out.print(ok);
+		} catch (Exception e) {
+		    errorService.InsertError(errorUtil.getError(e));
 		}
-		PrintWriter out = response.getWriter();
-		out.print(ok);
 	}
-	
 }

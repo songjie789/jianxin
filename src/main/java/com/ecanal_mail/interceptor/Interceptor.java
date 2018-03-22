@@ -32,10 +32,7 @@ public class Interceptor implements HandlerInterceptor  {
 
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object arg2) throws Exception {
 		
-		/*User admin = (User) request.getSession().getAttribute("admin");
-		if(admin==null) {
-			request.getRequestDispatcher("login").forward(request, response);
-		}*/
+		
 	
 		return true;
 

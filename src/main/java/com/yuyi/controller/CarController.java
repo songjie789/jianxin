@@ -14,7 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.ecanal_mail.tools.ErrorInfoFromException;
+import com.ecanal_mail.tools.ErrorUtil;
 import com.yuyi.model.Car;
 import com.yuyi.model.Part;
 import com.yuyi.model.Unit;
@@ -30,24 +30,17 @@ public class CarController {
 	@Autowired
 	@Qualifier("car")
 	private CarService car;
-	
-	//获取ErrorServiceImpl
-	@Autowired
-	@Qualifier("ErrorService")
-	private ErrorService erreoService;
-	
 	//获取驾驶员service
 	@Autowired
 	@Qualifier("admin_jiashiyuan")
 	private JiaShiYuanService driver;
-	
-	
-	/**
-	 * 加载ERROR异常信息转换成String字符串的工具類 存放在数据库中
-	 */
-	ErrorInfoFromException error = new ErrorInfoFromException();
-	
-	
+
+	 //引入捕获异常转换字符串的util
+	ErrorUtil errorUtil = new ErrorUtil();
+	//获取存储异常的service层
+	@Autowired
+	@Qualifier("ErrorService")
+	private ErrorService errorService;
 	
 	//车辆条件查询
 	/**
@@ -63,7 +56,6 @@ public class CarController {
 	public void Comprehensive_Search (@RequestParam("car_id")String car_id,@RequestParam("car_name")String car_name,
 			@RequestParam("car_number")String car_number,@RequestParam("car_driver")String car_drivet,
 			@RequestParam("car_unit")String car_unit,HttpServletResponse response) {
-			String error_message = null;
 		try {
 			System.out.println("进入车辆信息多条件查询 查询内容如下");
 			System.out.println("车辆编号:"+car_id+"-----车辆名称 : "+car_name+"-----车牌号 : "+car_number+"-----车辆所属驾驶员 : "+car_drivet+"车辆所属单位 : "+car_unit);
@@ -82,8 +74,7 @@ public class CarController {
 			out.print("哈哈");
 			
 		} catch (Exception e) {
-			error_message = error.getErrorInfoFromException(e);
-			erreoService.InsertError(error_message);
+		    errorService.InsertError(errorUtil.getError(e));
 			
 		}
 	}
@@ -154,7 +145,6 @@ public class CarController {
 				@RequestParam("carlength")String carlength,@RequestParam("carvin")String carvin,
 				@RequestParam("carnumber")String carnumber,@RequestParam("cardrivers") String cardrivers,@RequestParam("unit")String unit,
 			HttpSession session,HttpServletResponse response) {
-			String error_message = null;
 			try {
 				System.out.println("进入caradd的controller类");
 				PrintWriter out = response.getWriter();
@@ -162,7 +152,7 @@ public class CarController {
 				System.out.println("添加车辆是否成功 :"+a);
 				out.print(a);
 			} catch (Exception e) {
-				erreoService.InsertError(error.getErrorInfoFromException(e));
+			    errorService.InsertError(errorUtil.getError(e));
 			}
 		}
 		
@@ -175,12 +165,17 @@ public class CarController {
 		 * @throws IOException
 		 */
 		@RequestMapping("car_delectxinxi")
-		public void car_delect (@RequestParam("car_iddel") String car_id,HttpServletResponse response) throws IOException{
-			int delect_ok = car.CarDelect(car_id);
-			System.out.println("进入了删除车辆信息controller");
-			PrintWriter out = response.getWriter();
-			out.print(delect_ok);
+		public void car_delect (@RequestParam("car_iddel") String car_id,HttpServletResponse response){
+			try {
+			    int delect_ok = car.CarDelect(car_id);
+				System.out.println("进入了删除车辆信息controller");
+				PrintWriter out = response.getWriter();
+				out.print(delect_ok);
+			} catch (Exception e) {
+			    errorService.InsertError(errorUtil.getError(e));
+			}
 		}
+		
 		
 		
 		/**
@@ -192,17 +187,21 @@ public class CarController {
 		 */
 		//先查询修改的车辆信息,把车辆信息带到修改页面
 		@RequestMapping("select_car")
-		public void select_car(Model m,@RequestParam("car_id")String car_id,HttpServletResponse response,HttpSession session) throws IOException{
-			//往后台传输json数据时格式为utf-8
-			response.setCharacterEncoding("UTF-8");
-			PrintWriter out = response.getWriter();
-			List<Car> list = new ArrayList<Car>();
-			Car carmodel = car.selectCar(car_id);
-			list.add(carmodel);
-			JSONArray jsonArray = JSONArray.fromObject( list );
-			System.out.println("把修改车辆信息的车辆信息带到修改页面"+jsonArray);
-			String json = jsonArray.toString();
-			out.print(json);
+		public void select_car(Model m,@RequestParam("car_id")String car_id,HttpServletResponse response,HttpSession session){
+			try {
+			  //往后台传输json数据时格式为utf-8
+				response.setCharacterEncoding("UTF-8");
+				PrintWriter out = response.getWriter();
+				List<Car> list = new ArrayList<Car>();
+				Car carmodel = car.selectCar(car_id);
+				list.add(carmodel);
+				JSONArray jsonArray = JSONArray.fromObject( list );
+				System.out.println("把修改车辆信息的车辆信息带到修改页面"+jsonArray);
+				String json = jsonArray.toString();
+				out.print(json);
+			} catch (Exception e) {
+			    errorService.InsertError(errorUtil.getError(e));
+			}
 		}
 		
 		/**
@@ -217,13 +216,18 @@ public class CarController {
 		@RequestMapping("modify")
 		public void car_modify(@RequestParam("car_vins")String car_vins,@RequestParam("car_numbers")String car_numbers,
 				@RequestParam("car_units")String car_units,@RequestParam("car_drivers")String car_drivers
-				,HttpServletResponse response) throws Exception{
-				response.setCharacterEncoding("UTF-8");
-				PrintWriter out = response.getWriter();
-				int updata_ok = car.updateCar(car_vins,car_numbers,car_units,car_drivers);
-				System.out.println("车架号 : "+car_vins+"--------车牌号 : "+car_numbers+"--------所属驾驶员 : "+car_drivers+"--------所属公司 : "+car_units);
-				System.out.println("修改车辆信息页面"+updata_ok);
-				out.print(updata_ok);
+				,HttpServletResponse response){
+		    try {
+			response.setCharacterEncoding("UTF-8");
+			PrintWriter out = response.getWriter();
+			int updata_ok = car.updateCar(car_vins,car_numbers,car_units,car_drivers);
+			System.out.println("车架号 : "+car_vins+"--------车牌号 : "+car_numbers+"--------所属驾驶员 : "+car_drivers+"--------所属公司 : "+car_units);
+			System.out.println("修改车辆信息页面"+updata_ok);
+			out.print(updata_ok);
+		    } catch (Exception e) {
+			 errorService.InsertError(errorUtil.getError(e));
+		    }
+				
 			
 		}
 		
@@ -250,12 +254,16 @@ public class CarController {
 		 * @throws IOException
 		 */
 		@RequestMapping("car_repair")
-		public String Car_Repair(Model m) throws IOException {
-			List<com.yuyi.model.Car_Repair> Car_Repair = car.Select_Repair();
-			m.addAttribute("wx", Car_Repair);
-			//查询车辆部件
-			List<Part> bj = car.SlectPartName();
-			m.addAttribute("bj", bj);
+		public String Car_Repair(Model m) {
+			try {
+			    List<com.yuyi.model.Car_Repair> Car_Repair = car.Select_Repair();
+				m.addAttribute("wx", Car_Repair);
+				//查询车辆部件
+				List<Part> bj = car.SlectPartName();
+				m.addAttribute("bj", bj);
+			} catch (Exception e) {
+			    errorService.InsertError(errorUtil.getError(e));
+			}
 		return "/carrepair";
 		}
 		
@@ -276,7 +284,7 @@ public class CarController {
 				int ok = car.InsertPart(part_name);
 				out.print(ok);
 			} catch (Exception e) { //如果有异常就把异常信息插入到异常表中
-				erreoService.InsertError(error.getErrorInfoFromException(e));
+			    errorService.InsertError(errorUtil.getError(e));
 			}
 		}
 		
@@ -288,9 +296,13 @@ public class CarController {
 		 */
 		@RequestMapping("adddriver")
 		public String AddDriver(Model m) {
-			//查询车牌号
-			List<Car> js = driver.Select_Car_Number();
-			m.addAttribute("js", js);
+			try {
+			  //查询车牌号
+				List<Car> js = driver.Select_Car_Number();
+				m.addAttribute("js", js);
+			} catch (Exception e) {
+			    errorService.InsertError(errorUtil.getError(e));
+			}
 			return "/adddriver";
 		}
 		

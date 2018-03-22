@@ -46,7 +46,7 @@
 				<div class="bbD">
 					<p class="bbDP">
 						<button class="btn_ok btn_yes" onclick="add_driver()">提交</button>
-						<a class="btn_ok btn_no" href="main" id="quxiaosj">取消</a>
+						<a class="btn_ok btn_no" href="pilot" id="quxiaosj">取消</a>
 					</p>
 				</div>
 			</div>

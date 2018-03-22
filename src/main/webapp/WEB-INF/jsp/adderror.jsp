@@ -36,11 +36,10 @@
 	
 	 <!-- 分页  -->			
 <div style="width:1650px;margin:20px;top:0px;" id="MainForm">
-	<button class="button white" onclick="add_driver()">添加信息</button>
 	<table width="100%" height="100%" id="testtable2" cellpadding="10px" cellspacing="50px">
 		<thead><tr>
 			<th>异常编号</th>
-			<th>登录站好</th>
+			<th>登录账号</th>
 			<th>异常信息</th>
 			<th>操作时间</th>
 			</tr>

@@ -15,21 +15,23 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.ecanal_mail.tools.ErrorUtil;
 import com.ecanal_mail.tools.GetServletIp;
 import com.yuyi.model.Batch;
 import com.yuyi.model.User;
 import com.yuyi.service.AdminLoginService;
+import com.yuyi.service.ErrorService;
 import com.yuyi.service.UserService;
 import com.yuyi.util.GetTime;
 import com.yuyi.util.MD5;
 
-
-/**
- * @author SongJie
- *	
- */
 @Controller
 public class DeptController {
+ 
+	  //获取MD5加密工具类
+	@Qualifier("MD5")
+	private MD5 md5;
+	
 	@Autowired
 	@Qualifier("admin_login")
 	private UserService user;	
@@ -37,6 +39,13 @@ public class DeptController {
 	@Autowired
 	@Qualifier("admin_logina")
 	private AdminLoginService als;
+	
+	//引入捕获异常转换字符串的util
+	ErrorUtil errorUtil = new ErrorUtil();
+	//获取存储异常的service层
+	@Autowired
+	@Qualifier("ErrorService")
+	private ErrorService errorService;
 	
 	//跳转登陆页面
 	@RequestMapping("login")
@@ -46,8 +55,12 @@ public class DeptController {
 	
 	@RequestMapping("registration")
 	public String registration(Model m) {
-		List<Batch> b=user.SelectByBatch();
-		m.addAttribute("Batch", b);
+		try {
+		    List<Batch> b=user.SelectByBatch();
+			m.addAttribute("Batch", b);
+		} catch (Exception e) {
+		    errorService.InsertError(errorUtil.getError(e));
+		}
 		return "/registration";
 		
 	}
@@ -61,31 +74,33 @@ public class DeptController {
 	 */
 	@RequestMapping("index")
 	public String index(@RequestParam("username")String username,@RequestParam("password")String password,
-			HttpSession session,HttpServletRequest request) throws Exception {
-		String md5password = md5.MD5(password);
-		User a=user.selectBylogin(username, md5password);
-		String ipp = GetServletIp.getIpAddr(request);
-		System.out.println("登陆账号："+a);
-		if(a!=null) {	
-			System.out.println(username);
-			session.setAttribute("admin", username);   //存放登陆标记
-			GetTime getTime = new GetTime();
-			String time = getTime.time();
-			String ip = GetServletIp.getIpAddr(request);
-			String admin = (String) session.getAttribute("admin");
-			als.InsertLoginAdmin(ip, admin, time);
-			return "redirect:indexa";
+			HttpSession session,HttpServletRequest request)  {
+		try {
+		    String md5password = md5.MD5(password);
+			User a=user.selectBylogin(username, md5password);
+			String ipp = GetServletIp.getIpAddr(request);
+			System.out.println("登陆账号："+a);
+			if(a!=null) {	
+				System.out.println(username);
+				session.setAttribute("admin", username);   //存放登陆标记
+				GetTime getTime = new GetTime();
+				String time = getTime.time();
+				String ip = GetServletIp.getIpAddr(request);
+				String admin = (String) session.getAttribute("admin");
+				als.InsertLoginAdmin(ip, admin, time);
+				return "redirect:indexa";
+			}
+			else {
+				return "/login";
+			}
+		} catch (Exception e) {
+		    errorService.InsertError(errorUtil.getError(e));
 		}
-		else {
-			return "/login";
-		}
+		return "/login";
 	}
 	
 	
-	/**
-	 * 获取MD5加密工具类
-	 */
-	MD5 md5 = new MD5();
+	
 
 	//登陆之后转向主页面 向数据库添加 登陆的IP登陆的用户名登陆的时间
 	/**
@@ -110,25 +125,29 @@ public class DeptController {
 	@RequestMapping("registrationAdmin")
 	public void registrationAdmin(@RequestParam("username")String username,@RequestParam("password")String password,
 			@RequestParam("phone")String phone,Model aa,HttpSession session,
-			HttpServletResponse response) throws Exception {	
-			int ok = 0;
-			int number = 0;
-			PrintWriter out = response.getWriter();
-			//修改密码>>查询用户是否存在再进行修改密码
-			String md5password = md5.MD5(password);
-			String selectUpdate = user.selectupdate(username,md5password,phone);
-			//查询出来的用户信息如果不为空就可以修改用户
-			if(selectUpdate!=null){
-				number = user.xiugaiUser(username,md5password);
-				if(number>0){
-					ok=1;
+			HttpServletResponse response) {	
+			try {
+			    int ok = 0;
+				int number = 0;
+				PrintWriter out = response.getWriter();
+				//修改密码>>查询用户是否存在再进行修改密码
+				String md5password = md5.MD5(password);
+				String selectUpdate = user.selectupdate(username,md5password,phone);
+				//查询出来的用户信息如果不为空就可以修改用户
+				if(selectUpdate!=null){
+					number = user.xiugaiUser(username,md5password);
+					if(number>0){
+						ok=1;
+					}else{
+						ok=0;
+					}
 				}else{
-					ok=0;
+					ok=2;
 				}
-			}else{
-				ok=2;
+				out.print(ok);
+			} catch (Exception e) {
+			    errorService.InsertError(errorUtil.getError(e));
 			}
-			out.print(ok);
 	}
 	
 	
@@ -145,7 +164,7 @@ public class DeptController {
 	        try {  
 	            System.out.println(strs[i]);
 	        } catch (Exception e) {  
-	        	
+	            errorService.InsertError(errorUtil.getError(e));
 	        }  
 	    }  
 	}
@@ -165,7 +184,8 @@ public class DeptController {
 	@RequestMapping("AddUsers")
 	public void AddUsers(@RequestParam("username")String username,@RequestParam("password")String password,
 			@RequestParam("phone")String phone,@RequestParam("name")String name,
-			HttpSession session,HttpServletResponse response) throws IOException {
+			HttpSession session,HttpServletResponse response){
+	    try {
 		String md5password = md5.MD5(password);
 		int ok = 0;
 		int number=0;
@@ -182,5 +202,8 @@ public class DeptController {
 			ok=2;	//用户已存在
 		}
 		out.print(ok);
+	    } catch (Exception e) {
+		 errorService.InsertError(errorUtil.getError(e));
+	    }
 	}
 }
