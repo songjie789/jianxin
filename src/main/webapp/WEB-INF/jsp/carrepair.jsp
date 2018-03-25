@@ -46,7 +46,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	
 	<!--条件搜索  -->
 	<div style="width:1200px;margin:20px; background-color:#d7d7d7; id="MainForm">
-		<b>车牌号:</b><input style="height: 30px;width: 100px" id ="search_car_number"/>&nbsp;&nbsp;
+			<b>车牌号:</b><select id = "search_car_driver"style="height: 30px; ">
+		<option value="0" size="20px"> 请选择车辆 </option>
+			<c:forEach items="${requestScope.car}" var="car">
+				<option value="${car.car_id}">${car.car_number}</option>
+			</c:forEach>
+		</select>&nbsp;&nbsp;
+
 		<b>部件:</b><select id = "search_car_driver"style="height: 30px; ">
 		<option value="0" size="20px"> 请选择部件 </option>
 			<c:forEach items="${requestScope.bj}" var="bj">
@@ -57,6 +63,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<button class="button white"  id="search">搜索</button>
 		<a href="addpart">
 		<button class="button white" onclick="add_bujian()">新增部件</button></a>
+		<a href="addcarrepair">
+		<button class="button white" onclick="add_bujian()">添加维修记录</button></a>
 	</div>
 	
 	<!-- 分页 -->

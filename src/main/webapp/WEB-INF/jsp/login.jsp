@@ -46,6 +46,10 @@ button{
    <h1>后台管理系统</h1>
    <ul>
     <li> 
+    <c:if test="${zhuang ==null }">
+   	 <p>${zhuan }</p>
+   	 </c:if>
+   	 <p>${zhuang }</p>
      <label>账号：</label>
      <input type="text" name="username"  id = "username"class="textBox" placeholder="管理员账号"/>
     </li>

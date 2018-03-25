@@ -59,7 +59,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<option value="${unit.unit_name }">${unit.unit_name }</option>
 			</c:forEach>
 		</select>
-		<button class="button white" onclick="search()">搜索</button>
+		<button class="button white"  id="search">搜索</button>
 		<a href="addcarcontent">添加信息</a>
 	</div>
   		
@@ -82,17 +82,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				</thead>
 			</center>
 			<tbody>
-				<c:forEach items="${requestScope.selectCar}" var="second">
+				<c:forEach items="${requestScope.select_car}" var="select_car">
 					<tr>
-						<td>${second.car_id }</td>
-						<td>${second.car_name }</td>
-						<td>${second.car_length }</td>
-						<td>${second.car_vin }</td>
-						<td>${second.car_number}</td>
-						<td>${second.car_driver}</td>
-						<td>${second.car_unit}</td>
-						<td><button class="button white" onclick = "update(this.id)" id = ${second.car_id }>修改</button></td>
-						<td><button class="button white"  onclick= "deletes(this.id)" id = ${second.car_id }>删除</button></td>
+						<td>${select_car.car_id }</td>
+						<td>${select_car.car_name }</td>
+						<td>${select_car.car_length }</td>
+						<td>${select_car.car_vin }</td>
+						<td>${select_car.car_number}</td>
+						<td>${select_car.car_driver}</td>
+						<td>${select_car.car_unit}</td>
+						<td><button class="button white" onclick = "update(this.id)" id = ${select_car.car_id }>修改</button></td>
+						<td><button class="button white"  onclick= "deletes(this.id)" id = ${select_car.car_id }>删除</button></td>
 					</tr>
 				</c:forEach>
 			</tbody>

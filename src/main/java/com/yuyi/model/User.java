@@ -15,6 +15,19 @@ public class User {
 	private String password;
 	private String phone;
 	private String name;
+	private String supera;
+	/**
+	 * @return the supera
+	 */
+	public String getSupera() {
+	    return supera;
+	}
+	/**
+	 * @param supera the supera to set
+	 */
+	public void setSupera(String supera) {
+	    this.supera = supera;
+	}
 	public int getId() {
 		return id;
 	}

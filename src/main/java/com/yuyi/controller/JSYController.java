@@ -22,7 +22,7 @@ import com.yuyi.service.JiaShiYuanService;
 /**
  * <P>Title: JSYController</p>
  * <p>Description:</p>
- * <p>Company:山东宇易信息科技股份有限公司</p>
+ * <p>Company:小飞侠</p>
  * @author lcc
  * @data :2018年3月5日下午3:02:25
  * 

@@ -22,9 +22,8 @@ public class ErrorUtil {
 		for (StackTraceElement stackTraceElement : st) {
 		 exclass = stackTraceElement.getClassName();  //获取异常信息类名
 		method = stackTraceElement.getMethodName();   //获取异常信息方法名
-		
-	
-		return new Date() + ":" + "[类:" + exclass + "]调用"
+
+		 return new Date() + ":" + "[类:" + exclass + "]调用"
 		+ method + "时在第" + stackTraceElement.getLineNumber()
 		+ "行代码处发生异常!异常类型:" + e.getClass().getName();
    }

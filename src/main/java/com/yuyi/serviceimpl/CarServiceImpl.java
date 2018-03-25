@@ -107,4 +107,13 @@ public class CarServiceImpl implements CarService{
 	public int InsertPart(String part_name) {
 		return car.InsertPart(part_name);
 	}
+	/* (Javadoc)
+	 * @see com.yuyi.service.CarService#InsertRepair(java.lang.String, java.lang.String, java.lang.String, java.lang.String)
+	 *2018年3月25日下午9:31:02
+	 *添加车辆维修记录
+	 */
+	@Override
+	public int InsertRepair(String car_number, String repair_address, String repair_part, String unit_price) {
+	    return car.InsertRepair(car_number,repair_address,repair_part,unit_price);
+	}
 }

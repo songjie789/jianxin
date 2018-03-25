@@ -80,5 +80,15 @@ public interface CarDao {
 	//添加部件
 	@Insert("insert into part_table (part_name) values (#{part_name})")
 	int InsertPart(@RequestParam("part_name")String part_name);
+	/**
+	 * @param car_number
+	 * @param repair_address
+	 * @param repair_part
+	 * @param unit_price
+	 * @return
+	 * 添加车辆维修记录
+	 */
+	@Insert("insert into car_repair_table (car_number,repair_address,repair_part,unit_price) values (#{car_number},#{repair_address},#{repair_part},#{unit_price})")
+	int InsertRepair(@Param("car_number")String car_number, @Param("repair_address")String repair_address, @Param("repair_part")String repair_part, @Param("unit_price")String unit_price);
 	
 }

@@ -41,8 +41,8 @@
   		 var  car_driver_val = 	$("#car_driver option:selected").val();
   		 var  car_unit_val = 	$("#car_unit option:selected").val();
   		 //获取所属单位的下拉列表框
-  		 var  unit=document.getElementById("car_unit"); //获取驾驶员列表value值是否为0  为0就不能添加车辆信息
-  		 var unit_text=$("#car_unit option:selected");	//获取所属单位列表value值是否为1  为1就不能添加车辆信息
+  		 var  unit=document.getElementById("car_unit"); 
+  		 var unit_text=$("#car_unit option:selected");	
   		 var units= unit_text.text();  //获取车辆所属单位的text值
   		   		 if(carname==null||carname==""){
   		   		 	alert("车辆名称不能为空");
@@ -72,14 +72,7 @@
   		   		 	 alert("车牌号不能为空");
   		   		 	 return false;
   		   		 }
-  		   		   if(car_driver_val==0){
-		   			   alert("请选择驾驶员");
-		   			   return false;
-  		   		   }
-  		   		   if(car_unit_val==1){
-  		   			   alert("请选择所属单位");
-  		   			   return false;
-  		   		   }
+  		   		   
   			$.post("addcar", {
   			carname :carname,  
   			carlength:carlength, 
@@ -96,3 +89,8 @@
   				}
   			});
   		}
+  		
+  		 //取消修改
+		   function quxiao(){
+			   window.location.href=window.location.href;   // 刷新当前页面(相当于直接到车辆信息页面)
+		   }

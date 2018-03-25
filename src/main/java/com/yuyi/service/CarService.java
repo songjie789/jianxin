@@ -42,4 +42,13 @@ public interface CarService {
 	List<Unit> SelectUnit();
 	//添加部件
 	int InsertPart(String part_name);
+	/**
+	 * @param car_number
+	 * @param repair_address
+	 * @param repair_part
+	 * @param unit_price
+	 * @return
+	 * 添加车辆维修记录
+	 */
+	int InsertRepair(String car_number, String repair_address, String repair_part, String unit_price);
 }

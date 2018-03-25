@@ -33,7 +33,7 @@
 		
 		 //修改车辆信息
 		   function update_addto(){
-				var car_numbers = $("#update_number").val();//获取车牌号
+				var carnumber	 = $("#update_number").val();//获取车牌号
 				//获取驾驶员的下拉列表值
 		  		 var  cardriver=document.getElementById("update_driver");
 		  		 var cardriver_text=$("#update_driver option:selected");
@@ -43,11 +43,24 @@
 		  		 var unit_text=$("#update_unit option:selected");
 		  		 var units= unit_text.text();  //获取车辆所属单位的text值
 		  		 var vin = $("#update_vin").val();
-		  		
+		  		 var  car_driver_val = 	$("#update_driver option:selected").val();
+		  		 var  car_unit_val = 	$("#update_unit option:selected").val();
+		  		  if(!/^[京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领A-Z]{1}[A-Z]{1}[A-Z0-9]{4}[A-Z0-9挂]{1}$/.test(carnumber)){
+  		   			  alert("车牌号格式错误,正确格式鲁QV23B5");
+  		   			  return false;
+  		   		  }
+		  		if(car_driver_val==0){
+		   			   alert("请选择驾驶员");
+		   			   return false;
+		   		   }
+		   		   if(car_unit_val==0){
+		   			   alert("请选择所属单位");
+		   			   return false;
+		   		   }
 		 		$.post("modify",
 						{
 		 					car_vins :vin,
-							car_numbers:car_numbers,
+							car_numbers:carnumber,
 							car_units:units,
 							car_drivers:cardrivers
 							},
@@ -62,12 +75,6 @@
 						});
 			}
 		   
-		   //取消修改
-		   function quxiao(){
-			   window.location.href=window.location.href;   // 刷新当前页面(相当于直接舒心到车辆信息页面)
-		   }
-		   
-   
    
    //删除一条车辆信息
    function deletes(car_iddel){
@@ -89,29 +96,30 @@
   	
 
    	//顶部条件查询
-  	$(document).ready(function(){
-  		$("#search").click(function(){
-  			var car_id = $("#search_car_id").val(); //获取车辆ID
-  			var car_name = $("#search_car_name").val(); //获取车辆名称
-  			var car_number = $("#search_car_number").val();//获取车牌号
-  	  		//获取驾驶员的下拉列表值
-  	  		 var  cardriver=document.getElementById("search_car_driver");
-  	  		 var cardriver_text=$("#search_car_driver option:selected");
-  	  		 var cardrivers = cardriver_text.text(); //获取车辆所属驾驶员的text值
-  	  		 //获取所属单位的下拉列表框
-  	  		 var  unit=document.getElementById("search_car_unit");
-  	  		 var unit_text=$("#search_car_unit option:selected");
-  	  		 var units= unit_text.text();  //获取车辆所属单位的text值
-  	  		 $.post("Comprehensive_Search",
-  	  				 {
-  	  			 	car_id:car_id,
-  	  			 	car_name:car_name,
-  	  			 	car_number : car_number,
-  	  			 	car_drivers :cardrivers,
-  	  			 	car_unit:units
-  	  				 },
-  	  				 function(data){
-  	  					 alert(data);
-  	  				 });
-  			});
-  	});
+   function search(){
+	   alert("搜索按钮");
+	   		var car_id = $("#search_car_id").val(); //获取车辆ID
+			var car_name = $("#search_car_name").val(); //获取车辆名称
+			var car_number = $("#search_car_number").val();//获取车牌号
+	  		//获取驾驶员的下拉列表值
+	  		 var  cardriver=document.getElementById("search_car_driver");
+	  		 var cardriver_text=$("#search_car_driver option:selected");
+	  		 var cardrivers = cardriver_text.text(); //获取车辆所属驾驶员的text值
+	  		 //获取所属单位的下拉列表框
+	  		 var  unit=document.getElementById("search_car_unit");
+	  		 var unit_text=$("#search_car_unit option:selected");
+	  		 var units= unit_text.text();  //获取车辆所属单位的text值
+	  		 alert("搜索按钮");
+	  		 $.post("Comprehensive_Search",
+	  				 {
+	  			 	car_id:car_id,
+	  			 	car_name:car_name,
+	  			 	car_number : car_number,
+	  			 	car_drivers :cardrivers,
+	  			 	car_unit:units
+	  				 },
+	  				 function(data){
+	  					 window.location.href="select_car";
+	  				 });
+   }
+  		

@@ -1,6 +1,8 @@
 package com.yuyi.controller;
 
 import org.apache.ibatis.jdbc.SQL;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.yuyi.model.Car;
 public class DynamicSQL {
@@ -13,7 +15,7 @@ public class DynamicSQL {
 			{
 				SELECT ("*");
 				FROM("car_table");
-				if(car.getCar_id()!=null &&car.getCar_id().equals(""))
+				if(car.getCar_id()!=null && car.getCar_id().equals(""))
 					WHERE("car_id=#{car_id}");
 				if(car.getCar_name()!=null && car.getCar_name().equals(""))
 					WHERE("car_name=#{car_name}");

@@ -75,7 +75,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<div class="bbD">
 					<p class="bbDP">
 						<button class="btn_ok btn_yes" onclick="addcar()">添加</button>
-						<button class="btn_ok btn_no" onclick="quxiao()">取消</button>
+						<a class="btn_ok btn_no"  onclick="quxiao()">取消</a>
 					</p>
 				</div>
 			</div>

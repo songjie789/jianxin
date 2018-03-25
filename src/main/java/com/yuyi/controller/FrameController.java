@@ -48,7 +48,7 @@ public class FrameController {
 	@Qualifier("car")
 	private CarService car;
 	
-	   //引入捕获异常转换字符串的util
+	//引入捕获异常转换字符串的util
 	ErrorUtil errorUtil = new ErrorUtil();
 	//获取存储异常的service层
 	@Autowired
@@ -134,38 +134,11 @@ public class FrameController {
 		return "/changepwd";
 		
 	}
-	//测试
-	@RequestMapping("test")
-	public String Test(Model m) {
-		try {
-		    List<SecondMenu> two=second.SelectByid();
-			m.addAttribute("second",two);
-			
-		} catch (Exception e) {
-		    errorService.InsertError(errorUtil.getError(e));
-		}
-		return "/registration";
-	}
 	//添加用户
 	@RequestMapping("changepwda")
 	public String changepwda() {
 		
 		return "/changepwda";
 		
-	}
-	
-	//跳转到车辆信息页面
-	@RequestMapping("carcontent")
-	public String catContent(Model m){
-		//查询车辆信息,进行分页展示
-			try {
-			    List<Car> selectCar = car.selectCar();
-				System.out.println("查询车辆信息进行分页展示加载完毕");
-				System.out.println(selectCar.toString());
-				m.addAttribute("selectCar",selectCar);
-			} catch (Exception e) {
-			    errorService.InsertError(errorUtil.getError(e));
-			}
-			return "/carcontent";
 	}
 }
