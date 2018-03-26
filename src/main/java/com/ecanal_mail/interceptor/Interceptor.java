@@ -8,7 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.yuyi.model.User;
+import com.xiaofeixia.sj.model.User;
 
 
 public class Interceptor implements HandlerInterceptor  {
