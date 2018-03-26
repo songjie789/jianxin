@@ -16,7 +16,7 @@
 			<div>
 				<img src="img/main-bg.jpg" width="900px" height="450px"/>
 			</div>
-		</center>
+		</center> 
 		<!-- header -->
 		<div id="header">
 			<center>
